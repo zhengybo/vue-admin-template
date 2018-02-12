@@ -1,0 +1,97 @@
+/*
+	默认样式
+*/
+
+body,div,ul,li,img,dl,dt,dd,a,p,h1,h2,h3,h4,h5,h6,input,span,button,form,select,article,figure,figcaption,option,html,datalist{
+	padding:0;
+	margin:0;
+	border:0;
+	font-size: 14px;
+	list-style:none;
+}
+button{
+	outline: none;
+}
+img{
+	display:block;
+	border:0;
+}
+html{
+	height: 100%;
+}
+body{
+	overflow: hidden;
+	height: 100%;
+	// background-color: black;
+	// *{
+	// 	background-color: gray!important;
+	// 	color: white!important;
+	// 	border-color: white!important;
+	// }
+	font-size: 14px;
+	font-family: "Microsoft YaHei"!important;
+}
+input,textarea{
+	outline: none;
+	border:1px solid $c-border-0;
+}
+.w{
+	width:1200px;
+	margin:0 auto;
+}
+.l{
+	float:left;
+}
+.r{
+	float:right;
+}
+.r-right{
+	float : right!important;
+}
+.clear{
+	clear: both;
+}
+.vhide{
+	overflow: hidden;
+}
+a{
+	font-weight: normal;
+	text-decoration: none;
+	color: inherit;
+	color: $c-font-blue;
+}
+
+
+//动画
+.example-enter {
+  opacity: 0.01;
+	width: 0;
+	height: 0;
+  transition: opacity 1.5s ease-in;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+	width: auto;
+	height: auto;
+}
+
+.example-leave {
+  opacity: 1;
+  transition: opacity 1.5s ease-in;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0;
+}
+.animation-opacity{
+  -webkit-animation: lazyload 1s ease;
+}
+@-webkit-keyframes lazyload {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}

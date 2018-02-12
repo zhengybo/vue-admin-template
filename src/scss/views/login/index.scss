@@ -1,0 +1,95 @@
+#login{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(right, #646583 , #3c4f6f);
+  background: -webkit-linear-gradient(right, #646583 , #3c4f6f);
+  .loginInner{
+    width: 640px;
+    padding: 10px;
+    height: 533px;
+    z-index: 1;
+    overflow: hidden;
+    text-align: center;
+    @extend %middle;
+  }
+
+  .loginInnerL,
+  .loginInnerR{
+    width: 50%;
+    height: 100%;
+  }
+
+  .loginInnerL{
+    border-top-left-radius: $b-radius-10px;
+    border-bottom-left-radius: $b-radius-10px;
+    background-color: rgba(88,193,248,.7);
+
+  }
+
+  .loginInnerR{
+    border-top-right-radius: $b-radius-10px;
+    border-bottom-right-radius: $b-radius-10px;
+    padding: 0 45px;
+    box-sizing: border-box;
+    background-color: rgba(255,255,255,1);
+  }
+
+  .loginTitle{
+    margin-top: 100px;
+    margin-bottom: 65px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color:#2b2b2b;
+  }
+
+  .password{
+    margin-top: 10px;
+    // margin-bottom: 30px;
+  }
+
+  .loginBtn{
+    width: 156px;
+    height: 39px;
+    margin-top: 30px;
+    font-weight: bold;
+  }
+
+  .NAME{
+    display: inline-block;
+    width: 100%;
+    margin-top: 185px;
+    font-size: 50px;
+    color: white;
+  }
+
+  .password{
+    .el-input__prefix{
+      .el-input__icon{
+        background: url('./assets/images/icon_password.png') no-repeat center center;
+        background-size: 16px 16px;
+        &::before{
+          content: ''
+        }
+      }
+    }
+  }
+
+  .username{
+    .el-input__prefix{
+      .el-input__icon{
+        background: url('./assets/images/icon_user.png') no-repeat center center;
+        background-size: 16px 16px;
+        &::before{
+          content: ''
+        }
+      }
+    }
+  }
+
+  #verification{
+    margin-top: 10px;
+  }
+
+}

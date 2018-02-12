@@ -1,0 +1,23 @@
+export default {
+  home : '首页',
+  main : '首页',
+  user : '个人中心',
+  setting : '设置',
+  activeManage : '激活管理',
+  costSearch : '费用管理',
+  search : '查询',
+  search1 : '查询1',
+  'search1-1' : '查询1-1',
+  search2 : '查询2',
+  'search2-detail' : '详情',
+  'search2-detail1' : '详情1',
+  test1 : '测试1',
+  test2 : '测试2',
+  test3 : '测试3',
+  test4 : '测试4',
+  test5 : '测试5',
+  test6 : '测试6',
+  test7 : '测试7',
+  'test7-1-1' : '测试7-1-1',
+  'test7-1' :  '测试7-1'
+}
