@@ -184,20 +184,7 @@ export default {
             }
           }
         },
-        {
-          key : 's9',
-          type : 'time',
-          label : '我是s9',
-          timePickerAttrs : {
-            // format : 'yyyy-MM',
-            isRange : true
-          },
-          events : {
-            change(v){
-              console.log(v);
-            }
-          }
-        },
+
         {
           type : 'hr',
           label : '请看这里',
@@ -228,6 +215,20 @@ export default {
           fixedTimeAttrs : {
             // // format : 'yyyy-MM',
             // isRange : true
+          },
+          events : {
+            change(v){
+              console.log(v);
+            }
+          }
+        },
+        {
+          key : 's9',
+          type : 'time',
+          label : '我是s9',
+          timePickerAttrs : {
+            // format : 'yyyy-MM',
+            isRange : true
           },
           events : {
             change(v){

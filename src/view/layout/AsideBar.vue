@@ -153,7 +153,7 @@ export default {
   .aside-scroll{
     z-index: 100;
     width: 200px;
-    transition:width .5s ease;
+    transition:all .5s ease;
   }
   .animate-scroll{
     width: 40px;

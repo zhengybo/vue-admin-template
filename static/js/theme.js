@@ -84,7 +84,7 @@
 			'body a{color:'+newColor+'}',
 			'.el-aside .el-submenu .el-menu-item{background-color: '+bgSoft+'!important;}',
 			'.el-aside  .el-menu .el-menu .el-submenu__title{background-color: '+bgSoft+'!important;}',
-			'.el-aside .el-menu--collapse .is-active .el-submenu__title{color:'+softColor(newColor,0.1,0.3)+'!important;}',
+			'.el-aside .el-menu--collapse .is-active > .el-submenu__title{color:'+softColor(newColor,0.1,0.3)+'!important;}',
 			'.el-aside .is-active.el-submenu > .el-submenu__title .el-submenu__icon-arrow{color:'+softColor(newColor,0.1,0.3)+'!important;}',
 			'.el-aside  .el-menu-item:hover,.el-aside  .el-menu .el-submenu__title:hover{background-color: '+tintColor(bgSoft.replace('#',''),0.2)+'!important;}',
 			'#nprogress .spinner-icon{border-top-color :'+newColor+'!important ;border-left-color:'+newColor+'!important} #nprogress .bar{background:'+ newColor +'!important}'

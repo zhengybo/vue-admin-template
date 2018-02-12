@@ -7,7 +7,10 @@ import store  from './store'
 import './icons'
 import '@/assets/css/family.css' //需要单独引入
 // import ElementUI from 'element-ui'
-// import 'element-ui/lib/theme-chalk/index.css'
+// 注意 开发用这个 调试比较快
+if(process.env.NODE_ENV == 'development'){
+  require('element-ui/lib/theme-chalk/index.css');
+}
 // Vue.use(ElementUI)
 Vue.config.productionTip = false
 require('@/js/components/index.js').default(Vue) //注册全局组件
