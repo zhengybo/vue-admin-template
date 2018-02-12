@@ -41,8 +41,6 @@
 import { AsyncRouter } from '@/router/route'
 import { Str, Arrayed } from '@/js/public/tool'
 import { mapState } from 'vuex'
-import VueScrollbar from 'vue2-scrollbar';
-require("vue2-scrollbar/dist/style/vue2-scrollbar.css")
 export default {
   computed: {
     ...mapState({
@@ -91,7 +89,7 @@ export default {
   mounted(){
     this.initialize();
   },
-  components: { VueScrollbar },
+  components: {  },
   methods: {
     initialize(){
       // 赋予外部的openedMenus 使其所有操作被外部的openedMenus接收到

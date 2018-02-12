@@ -6,7 +6,6 @@ import mixin from './mixin';
 import store  from './store'
 import './icons'
 import '@/assets/css/family.css' //需要单独引入
-require('vue2-scrollbar/dist/style/vue2-scrollbar.css')
 // import ElementUI from 'element-ui'
 // import 'element-ui/lib/theme-chalk/index.css'
 // Vue.use(ElementUI)

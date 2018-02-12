@@ -25,8 +25,6 @@
 
 <script>
 
-// import observeResize  from '@/js/public/';
-require("vue2-scrollbar/dist/style/vue2-scrollbar.css")
 export default {
   name : 'home',
   data(){
