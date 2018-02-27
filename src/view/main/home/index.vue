@@ -310,15 +310,5 @@ export default {
 </script>
 
 <style scoped lang="css">
-.my-scrollbar{
-  width: 35%;
-  min-width: 300px;
-  height: 250px;
-}
 
-/*The Content*/
-.scroll-me{
-  width: 400px;
-  min-width: 750px;
-}
 </style>

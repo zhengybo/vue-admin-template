@@ -3,12 +3,12 @@
  * 侧边栏
  */
 
-let openSwitch = +localStorage.getItem('OPEN-SWITCH'),
-    collapseSwitch = !+localStorage.getItem('COLLAPSE-SWITCH');
+let openSwitch = localStorage.getItem('OPEN-SWITCH'),
+    collapseSwitch = localStorage.getItem('COLLAPSE-SWITCH');
 export default {
   state : {
-    open : openSwitch === null ? true : !!openSwitch,
-    collapse : collapseSwitch,
+    open : openSwitch === null ? true : !!+openSwitch,
+    collapse : openSwitch === null ? false : !+collapseSwitch,
     onlyOpenActive : true // 展开时仅仅打开当前项 否则打开收缩前的状态项
   },
   mutations : {

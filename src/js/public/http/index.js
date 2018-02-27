@@ -5,7 +5,7 @@
 import store from '@/store'
 import fetch from 'superagent' // 伪装的fetch
 import config from './config'
-import {Obj,Cookie} from './../tool'
+import { Obj, Cookie } from './../tool'
 import { Loading } from 'element-ui'
 
 // window.token = null;

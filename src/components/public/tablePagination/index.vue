@@ -171,6 +171,11 @@ export default {
   .el-pagination{
     text-align: center;
   }
+  //  自带border貌似 会延迟1s才出来
+  > .el-table{
+    border-top:1px solid #e6ebf5;
+    border-left:1px solid #e6ebf5;
+  }
 }
 
 </style>

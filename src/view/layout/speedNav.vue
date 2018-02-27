@@ -67,7 +67,7 @@ export default {
           result = [],
           i = -gap;
       while((i += gap) < options.length){
-        result[result.length] = options.filter((v,k) => k>=i&&k<i + gap);
+        result[result.length] = options.filter((v,k) => k>=i&&k<i+gap);
       }
       if(!result.length)result[result.length] = []; //保持滑块
       return result;

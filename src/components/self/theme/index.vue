@@ -40,9 +40,9 @@ export default {
   },
   methods : {
     changeTheme(color,oldColor){
-      const newColors = this.mixColor(color.replace('#', ''))
-      const oldColors = this.mixColor(oldColor.replace('#', ''))
-      let style = document.getElementById(this.themeId),
+      const newColors = this.mixColor(color.replace('#', '')),
+            oldColors = this.mixColor(oldColor.replace('#', ''));
+      let style = document.getElementById(this.themeId) || {},
           innerText = style.innerText;
       if(!innerText)return
       style.innerText = this.updateStyle(innerText, oldColors, newColors);

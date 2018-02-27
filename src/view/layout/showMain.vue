@@ -1,7 +1,7 @@
 <!-- 由于element 一些组件样式变化
     与el-elementbar(基于原生的scroll)有关联固采用elementbar -->
 <template lang="html">
-<el-scrollbar>
+<el-scrollbar class="scrollbar">
   <el-main class="warp-contain">
     <!-- <scrollbar scrollbar="always"> -->
       <!-- <div class="warp-main-inner"> -->
@@ -49,7 +49,7 @@ export default {
   max-height: 100%;
 }
 
-.el-scrollbar{
+.scrollbar{
   height: 100%;
   .el-scrollbar__wrap{
     overflow-x:hidden;

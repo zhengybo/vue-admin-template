@@ -1,19 +1,19 @@
 <!-- 下拉 -->
 <template lang="html">
   <el-select
-  @change="change"
-  @visible-change="visibleChange"
-  @remove-tag="removeTag"
-  @clear="clear"
   @blur="blur"
+  @clear="clear"
   @focus="focus"
-  v-model="defaultValue[field.key]"
+  @change="change"
+  @remove-tag="removeTag"
+  @visible-change="visibleChange"
   v-bind="selectAttrs"
+  v-model="defaultValue[field.key]"
   :placeholder="field.desc || '请选择'">
     <el-option
       v-for="(item,index) in field.options"
+      v-bind="computeSelfAttrs(item.attrs)"
       :key="index"
-      v-bind="optionAttrs"
       :label="item.name"
       :value="item.value">
     </el-option>
@@ -24,7 +24,7 @@
 export default Object.assign(require('@/components/form/common').default('select'),{
   mixins : [{
     data(){
-      const { 
+      const {
         selectAttrs = {},
         optionAttrs = {},
         desc = '请选择' } = this.field;
@@ -35,6 +35,9 @@ export default Object.assign(require('@/components/form/common').default('select
       }
     },
     methods : {
+      computeSelfAttrs(value){
+        return Object.assign({},this.optionAttrs,value);
+      }
     }
   }]
 })
