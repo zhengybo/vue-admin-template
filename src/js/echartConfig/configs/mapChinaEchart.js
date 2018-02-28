@@ -1,19 +1,19 @@
 /**
- * 特殊地图统计配置
+ * 地图统计配置
  */
 
 import { Obj } from '@/js/public/tool'
 
 export default type => options => {
-    console.log(options);
+  let { title , max = 0 , visualMap = {}, series = {} } = options;
   return {
     title: Obj.merge({
         text: '',
         left: 'center',
         textStyle: {
-          
+
         }
-    },options.title),
+    },title),
     tooltip: {
         trigger: 'item',
         formatter: '{b} {c}'
@@ -21,7 +21,7 @@ export default type => options => {
     visualMap: Obj.merge({
         seriesIndex: 0,
         min: 0,
-        max: options.max || 0,
+        max: max || 0,
         left: 'left',
         top: 'bottom',
         inRange: {
@@ -31,7 +31,7 @@ export default type => options => {
         },
         text: ['高','低'],           // 文本，默认为数值文本
         calculable: true
-    },options.visualMap),
+    },visualMap),
     grid: {
         height: 200,
         width: 8,
@@ -84,7 +84,7 @@ export default type => options => {
                 }
             },
             data:[]
-        },options.series),
+        },series),
         {
             zlevel: 2,
             name: '地图指示',

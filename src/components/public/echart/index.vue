@@ -1,7 +1,11 @@
 <!-- 绘制图形 -->
 <template lang="html">
     <div class="Econtain">
-      <div class="selfChart" :id="id+'Echart'" :style="Style"></div>
+      <div
+      ref="self"
+      class="selfChart"
+      :id="id+'Echart'"
+      :style="styleCSS"></div>
       <div v-show="noData" class="noData">
         没有查到相关数据
       </div>
@@ -9,8 +13,8 @@
 </template>
 
 <script>
-import config from '@/js/echartConfig'
-import {echartTool} from '@/js/public/tool/echartTool'
+import echartConfig from '@/js/echartConfig'
+import { echartTool } from '@/js/public/tool/echartTool'
 
 export default {
 	props : {
@@ -25,7 +29,7 @@ export default {
         options : {}
       })
     },
-    Style : {
+    styleCSS : {
       type : Object,
       default(){
         return {
@@ -52,16 +56,23 @@ export default {
       default : false
     },
   },
+  computed : {
+    theme(){
+      return this.$store.state.theme.theme;
+    },
+    loadMsg(){
+      return {
+         text : '数据获取中···',
+         color : this.theme,
+         zlevel : 999
+      }
+    }
+  },
 	data(){
   	return {
       echart : null,
       http : null,
-      noData : false,
-      loadMsg : {
-         text : '数据获取中···',
-         color : '#ff8245',
-         zlevel : 999
-      },
+      noData : false
   	}
 	},
 	mounted () {
@@ -82,53 +93,49 @@ export default {
   },
 	methods : {
     init(){
-      this.echart = echarts.init(document.getElementById(this.id+'Echart'));
+      // console.log(document.getElementById(this.id+'Echart')==this.$refs.self);
+      this.echart = echarts.init(this.$refs.self);
       this.initLoading && this.load();
     },
     setOption(param){
-      // console.log(param.options.yx);
-      let series = param.options.series,
-          data = null;
-      if(series[0]){
-        data = series[0].data;
-      }else {
-        data = series.data
-      }
-      if(!data.length){
-        this.noData = true;
-      }else {
-        this.noData = false;
-      }
-      param.type == 'barEchart' &&  param.options.yx !== false && echartTool.setHeight(this.$el.querySelector('.selfChart'),param.options,this.echart);
-      this.echart.setOption(config[param.type](param.options));
-      this.setting.callback && this.setting.callback(this.echart);
+      let { echart, setting, $refs : { self } } = this,
+          { options, options : { series }, config = {}, type } = param,
+          data = series[0] ? series[0].data : series.data;
+      this.noData = data && !data.length;
+      config.yx && echartTool.setHeight(self, options, echart);
+      echart.setOption(echartConfig[type](options, config));
+      setting.callback && setting.callback(echart);
     },
     load (){ // 带入数据
       this.echart.showLoading(this.loadMsg);
       this.noData = false;
-      let setting = this.setting;
-      if(this.http){
-        this.http.abort();
-        this.http = null;
-      }
-      this.http = this.$api.http({
-        url : setting.url ,
-        type : setting.type || 'GET',
-        data : JSON.parse(JSON.stringify(setting.data)),
+      let { setting : { url, success, alias, fail }, param } = this;
+      this.$http({
+        url : url,
+        data : {
+        },
+        publicFn : (res) => {
+          this.echart.hideLoading();
+        },
         success : (data) => {
-          this.echart.hideLoading();
-          setting.success && setting.success.call(this,echartTool.changeData(data.list || [],setting.alias,this.param.type == 'barEchart'),this.param.options,this.param,data.list);
-          this.setOption(this.param);
+          success && success.call(
+            this,
+            echartTool.changeData(
+              data.list || [],
+              alias
+            ),
+            param.options,
+            param,
+            data.list
+          );
+          this.setOption(param);
         },
-        error :(state) => {
-          this.echart.hideLoading();
-          state !== '0000' && this.$root.toast('失败');
-          setting.error && setting.error(data);
+        fail : (data) => {
+          sfail && fail(data);
         },
-        catch : () => {
-            this.echart.hideLoading();
+        catchFn(){
         }
-      });
+      })
     }
 	},
   destroyed(){

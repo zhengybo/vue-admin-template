@@ -91,7 +91,7 @@ const http = function(setting,exist,length){
         if(!checkToken.call(this,json.returnErrCode))return;
         setting.notify && this.$notify.error({
           title: '提示',
-          message: json.returnErrMsg,
+          message: json.returnErrMsg || '发生一个未知错误',
           position : 'bottom-right'
         });
         setting.fail && setting.fail.call(this,json);

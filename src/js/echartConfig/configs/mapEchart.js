@@ -1,10 +1,10 @@
 /**
- * 地图类的配置
+ * 特殊地图类的配置
  */
 import { Obj } from '@/js/public/tool'
 const maps = ['scatter','heatmap']; //需要地图的类型
 export default type => options => {
-
+  let { title = {}, backgroundColor, geo = {}, series = [] } = options;
   return {
       title: Obj.merge({
           text: '',
@@ -12,8 +12,8 @@ export default type => options => {
           textStyle: {
               color: '#fff'
           }
-      },options.title),
-      backgroundColor: options.backgroundColor ||  '#404a59',
+      },title),
+      backgroundColor: backgroundColor ||  '#404a59',
       visualMap: {
           min: 0,
           max: 500,
@@ -42,9 +42,9 @@ export default type => options => {
                   areaColor: '#2a333d'
               }
           }
-      },options.geo),
+      },geo),
 
-      series : options.series.map(item => Obj.merge({
+      series : series.map(item => Obj.merge({
                 name : '',
                 type:type,
                 coordinateSystem: 'geo',

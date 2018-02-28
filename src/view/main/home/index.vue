@@ -154,7 +154,12 @@ export default {
           type : 'switch',
           label : '我是s6',
           onText : '是',
-          offText : '否'
+          offText : '否',
+          events : {
+            change(v){
+              console.log(v);
+            }
+          }
         },
         {
           key : 's7',
@@ -261,8 +266,6 @@ export default {
             showStops : true,
             showInput : true,
             disabled : false
-            // // format : 'yyyy-MM',
-            // isRange : true
           },
           events : {
             change(v){
