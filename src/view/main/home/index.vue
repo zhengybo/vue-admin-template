@@ -80,29 +80,29 @@ export default {
               label: '黄金糕'
             }, {
               value: 'op2',
-              label: '双皮奶'
+              label: '双皮奶1'
             },
             {
-              value: 'op2',
-              label: '双皮奶'
-            },
-            {
-              value: 'op2',
-              label: '双皮奶'
-            },
-            {
-              value: 'op2',
-              label: '双皮奶'
-            },
-            {
-              value: 'op2',
-              label: '双皮奶'
-            },
-            {
-              value: 'op2',
-              label: '双皮奶'
-            },{
               value: 'op3',
+              label: '双皮奶2'
+            },
+            {
+              value: 'op4',
+              label: '双皮奶3'
+            },
+            {
+              value: 'op5',
+              label: '双皮奶4'
+            },
+            {
+              value: 'op7',
+              label: '双皮奶5'
+            },
+            {
+              value: 'op8',
+              label: '双皮奶6'
+            },{
+              value: 'op9',
               label: '蚵仔煎'
             }]
         },
@@ -193,7 +193,7 @@ export default {
         {
           key : 's10',
           type : 'fixedTimeRange',
-          label : '我是s9',
+          label : '我是s10',
           desc : {
             start : '开始时间',
             end : '结束时间'

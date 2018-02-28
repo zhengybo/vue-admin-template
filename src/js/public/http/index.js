@@ -7,6 +7,8 @@ import fetch from 'superagent' // 伪装的fetch
 import config from './config'
 import { Obj, Cookie } from './../tool'
 import { Loading } from 'element-ui'
+// 模拟方式
+const method = process.env.NODE_MOCK ? 'GET' : void 0;
 
 // window.token = null;
 let id = 0,     //记录引用
@@ -30,7 +32,7 @@ const fetchHttp = function(setting,exist,length=1){//请求
   }
   // window.token = window.token || localStorage.getItem('token');
   let _data = Obj.clear(JSON.parse(JSON.stringify(data))),//清除空参数
-      _f = fetch(type, url).timeout(setting.timeout || timeout.during *1000),//默认超时为10s
+      _f = fetch(method || type, url).timeout(setting.timeout || timeout.during *1000),//默认超时为10s
       result = Object.assign(_data,{//生成参数
         // 特殊的参数全局
         token : store.state.user.token

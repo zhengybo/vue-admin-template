@@ -134,13 +134,13 @@ export default {
         {
           key : 'tools',
           type : 'checkbox',
-          label : '-快捷工具栏选项',
+          // label : '-快捷工具栏选项',
           checkAll : false,
-          // 不能再created赋值，不然检测不到 原因未知 
+          // 不能再created赋值，不然检测不到 原因未知
           hidden : !+localStorage.getItem('SHOW-TOOLS'),
           options : [],
           attrs : {
-            labelWidth : '170px'
+            // labelWidth : '170px'
           },
           events : {
             change : v => this.changeTools(v)

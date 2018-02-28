@@ -9,7 +9,7 @@
     class="slide">
       <span v-if="!flag">&gt;&gt;</span>
       <img
-      v-if="flag" 
+      v-if="flag"
       class="filshImg"
       :src="'./static/images/lib/flish.png'" alt=""></div>
     <div id="green" class="green">
@@ -92,13 +92,6 @@ export default {
   height: 30px;
   background-color: #e8e8e8;
   position: relative;
-    //
-    // &.flish{
-    //   .slide{
-    //     background: url('./../../../assets/images/flish.png') no-repeat center center;
-    //     background-size: 16px 16px;
-    //   }
-    // }
 
   .filshImg{
     position: absolute;

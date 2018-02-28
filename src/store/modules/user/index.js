@@ -93,7 +93,7 @@ const user = {
     getUserInfo({ commit, state }){ //获取用户信息
 
       return http({ //调用全局的 异常 会被catch捕捉
-        url :'/api/userInfo',
+        url :apis.userinfo,
         loading : {
           text : '权限检验中...'
         },

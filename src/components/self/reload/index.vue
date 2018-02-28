@@ -10,7 +10,7 @@ export default {
   name : 'reload',
   methods : {
     reload(){
-      this.$store.dispatch('reloadRouter',this.$route.name)
+      this.$store.dispatch('reloadRouter',this.$route.name);
     }
   }
 }
