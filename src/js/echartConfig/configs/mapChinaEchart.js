@@ -5,14 +5,10 @@
 import { Obj } from '@/js/public/tool'
 
 export default type => options => {
-  let { title , max = 0 , visualMap = {}, series = {} } = options;
+  let { title , max , visualMap = {}, series = {} } = options;
   return {
-    title: Obj.merge({
-        text: '',
-        left: 'center',
-        textStyle: {
+    title: Obj.merge({ // 标题优先级高于baseExConfig中
 
-        }
     },title),
     tooltip: {
         trigger: 'item',
@@ -21,7 +17,6 @@ export default type => options => {
     visualMap: Obj.merge({
         seriesIndex: 0,
         min: 0,
-        max: max || 0,
         left: 'left',
         top: 'bottom',
         inRange: {
@@ -38,32 +33,7 @@ export default type => options => {
         right: 80,
         bottom: 10
     },
-    xAxis: {
-        type: 'category',
-        data: [],
-        splitNumber: 1,
-        show: false
-    },
-    yAxis: {
-        position: 'right',
-        min: 0,
-        max: 20,
-        splitNumber: 20,
-        inverse: true,
-        axisLabel: {
-            show: true
-        },
-        axisLine: {
-            show: false
-        },
-        splitLine: {
-            show: false
-        },
-        axisTick: {
-            show: false
-        },
-        data: []
-    },
+
     series: [
         Obj.merge({
             zlevel: 0.5,
@@ -84,21 +54,7 @@ export default type => options => {
                 }
             },
             data:[]
-        },series),
-        {
-            zlevel: 2,
-            name: '地图指示',
-            type: 'bar',
-            barWidth: 5,
-            itemStyle: {
-                normal: {
-                    color: undefined,
-                    shadowColor: 'rgba(0, 0, 0, 0.1)',
-                    shadowBlur: 10
-                }
-            },
-            data: [20]
-        }
+        },series)
       ]
   }
 }

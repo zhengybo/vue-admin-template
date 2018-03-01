@@ -5,7 +5,7 @@ export default {
     reload : true
   },
   mutations : {
-    'RELOAD_ROUTER' : (state,name) => {
+    RELOAD_ROUTER : (state,name) => {
       state.reload = false
       NProgress.start();
       setTimeout(() => { //增加刷新显示变化效果

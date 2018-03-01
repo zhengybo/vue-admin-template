@@ -1,6 +1,7 @@
 export default {
   home : '首页',
   main : '首页',
+  form : '表单',
   user : '个人中心',
   setting : '设置',
   activeManage : '激活管理',

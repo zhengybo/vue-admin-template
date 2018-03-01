@@ -36,6 +36,7 @@ export default {
       localStorage.setItem('tool-top',top);
     },
     SET_TOOLS : (state, tool = []) => {
+      state.defaultOptions = tool;
       state.options = computeOptions(options, tool);
     }
   },

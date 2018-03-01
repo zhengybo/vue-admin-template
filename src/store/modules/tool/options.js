@@ -36,6 +36,4 @@ export default [
       console.log('这里可以进行退出事件');
     }
   }
-  // {icon : 'setting',name : '64',key : 'setting',status : false},
-  // {icon : 'setting',name : '89',key : 'setting',status : false}
 ].map(item => Object.assign(item,{status : false,disabled : false}))

@@ -28,10 +28,10 @@ export default {
     noPermissionRouter : []
   },
   mutations : {
-    'PRUDOCT_ROUTER' : (state , routers) => { //产生有权限路由
+    PRUDOCT_ROUTER : (state , routers) => { //产生有权限路由
       state.permissionRouter = routers;
     },
-    'PRUDOCT_NO_ROUTER' : (state) => { //产生无权限路由
+    PRUDOCT_NO_ROUTER : (state) => { //产生无权限路由
       state.noPermissionRouter = state.noRights.map(path => ({
         path: path,redirect: '/403',hidden: false
       }))

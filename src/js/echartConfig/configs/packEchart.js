@@ -4,7 +4,7 @@
 
 /**
  * config {
-  yx : true
+  horizonta : true,
 }
  */
 /** options传入参数说明
@@ -46,33 +46,20 @@ export default type => (options, config = {}) => {
       } : {}
     },item))
    })
-  // let percent = Array.isArray(xAxis) && xAxis.length>1
+
   let [x,y] = [
     xAxis,
     {
       type: 'value',
-      // max:percent ?  (value) => (value.max + value.max/10) : null
+
     }
   ]
 
-  // if(yx === void 0 && type == 'bar'){yx = true;}
-  if(config.yx)[x,y] = [y,x];
+  if(config.horizonta)[x,y] = [y,x];
   return {//新增统计
-    title : Object.assign({
-                show : false,
-                text: '',
-                left  : 'center',
-                textStyle : {
-                  fontWeight  : 'normal'
-                }
+    title : Obj.merge({ // 标题优先级高于baseExConfig中
+
               },title),
-    // toolbox: {//工具栏
-    //   feature: {
-    //       saveAsImage: {
-    //         name :  'xxxx'
-    //       }
-    //   },
-    // },
     xAxis : x,
     yAxis : y,
     series : series.map(item => Obj.merge({
@@ -87,7 +74,7 @@ export default type => (options, config = {}) => {
                   label: {
                     normal: {
                       show: type == 'bar',
-                      position: config.yx === false ? 'top' : 'right',
+                      position: config.horizonta ? 'right' : 'top',
                       color : '#000'
                     }
                   },

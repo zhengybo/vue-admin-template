@@ -6,9 +6,7 @@
       class="selfChart"
       :id="id+'Echart'"
       :style="styleCSS"></div>
-      <div v-show="noData" class="noData">
-        没有查到相关数据
-      </div>
+      <div v-show="noData" class="noData">没有查到相关数据</div>
     </div>
 </template>
 
@@ -102,7 +100,7 @@ export default {
           { options, options : { series }, config = {}, type } = param,
           data = series[0] ? series[0].data : series.data;
       this.noData = data && !data.length;
-      config.yx && echartTool.setHeight(self, options, echart);
+      config.horizonta && echartTool.setHeight(self, options, echart);
       echart.setOption(echartConfig[type](options, config));
       setting.callback && setting.callback(echart);
     },
@@ -131,7 +129,7 @@ export default {
           this.setOption(param);
         },
         fail : (data) => {
-          sfail && fail(data);
+          fail && fail(data);
         },
         catchFn(){
         }

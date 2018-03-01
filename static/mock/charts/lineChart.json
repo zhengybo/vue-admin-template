@@ -1,0 +1,30 @@
+{
+  "returnSuccess":true,
+  "returnErrMsg":"",
+  "list" : [
+    {
+      "name" : "吃类",
+      "data" : [
+        { "name" : "Mon", "value" : 820 },
+        { "name" : "Tue", "value" : 932 },
+        { "name" : "Wed", "value" : 901 },
+        { "name" : "Thu", "value" : 934 },
+        { "name" : "Fri", "value" : 1290 },
+        { "name" : "Sat", "value" : 1330 },
+        { "name" : "Sun", "value" : 1320 }
+      ]
+    },
+    {
+      "name" : "喝类",
+      "data" : [
+        { "name" : "Mon", "value" : 220 },
+        { "name" : "Tue", "value" : 432 },
+        { "name" : "Wed", "value" : 501 },
+        { "name" : "Thu", "value" : 834 },
+        { "name" : "Fri", "value" : 1290 },
+        { "name" : "Sat", "value" : 930 },
+        { "name" : "Sun", "value" : 1320 }
+      ]
+    }
+  ]
+}

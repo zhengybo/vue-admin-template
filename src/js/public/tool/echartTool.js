@@ -16,7 +16,7 @@ class echartTool {
   }
   /* 数据转化 根据项目,具体修改 */
   // 项目应该有一个统一的数据格式返回,这里统一处理请求的数据的格式转化。
-  static changeData(data,alias){
+  static changeData(data,alias = {}){
     /**
      * 默认data 格式为
      * [{
@@ -24,6 +24,7 @@ class echartTool {
        data : [{name : 'xxx',value : 'xxx'}]},
        {..},{...},...]
      */
+    if(alias.sounce)return data;
     alias = Object.assign({
       xAxis : 'name',  //横坐标
       // data : 'data', //数据别名.

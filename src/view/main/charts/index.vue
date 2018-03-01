@@ -2,51 +2,44 @@
   <div class="">
     <echart
     :initLoading="true"
-    :setting="setting"
-    :param="param"></echart>
+    :setting="line.setting"
+    :param="line.param"></echart>
+    <echart
+    :initLoading="true"
+    :setting="bar.setting"
+    :param="bar.param"></echart>
+    <echart
+    :initLoading="true"
+    :setting="barHor.setting"
+    :param="barHor.param"></echart>
+    <echart
+    :initLoading="true"
+    :styleCSS="map.style"
+    :setting="map.setting"
+    :param="map.param"></echart>
+    <echart
+    :initLoading="true"
+    :styleCSS="scatterMap.style"
+    :setting="scatterMap.setting"
+    :param="scatterMap.param"></echart>
   </div>
 </template>
 
 <script>
-import apis from '@/js/api'
+import bar from './config/bar'
+import map from './config/map'
+import line from './config/line'
+import barHor from './config/bar-hor'
+import scatterMap from './config/scatterMap'
 export default {
+  name : 'test1',
   data(){
     return {
-      param : {
-        type : 'lineEchart',
-        config : {
-          // yx : true,
-          savename : '扫描趋势'
-        },
-        options : {
-          // yx : false,
-          xAxis : {
-            data: []
-          },
-          series : [
-            {
-              type : 'bar'
-            }
-          ]
-        }
-      },
-      setting : {
-        url : apis.lineChartExample,
-        data : {
-
-        },
-        alias : {
-          // mul : false, //多条数据?
-          // xAxis : 'dates',  //横坐标
-          // data : 'data', //数据别名
-          // value : 'count', //series 值
-
-        },
-        success : (data,options) => { //options 指代 echart.param.options
-          options.xAxis = data.xAxis;
-          options.series = data.series
-        },
-      }
+      bar,
+      map,
+      line,
+      barHor,
+      scatterMap
     }
   }
 }

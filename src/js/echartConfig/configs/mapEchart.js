@@ -4,16 +4,16 @@
 import { Obj } from '@/js/public/tool'
 const maps = ['scatter','heatmap']; //需要地图的类型
 export default type => options => {
-  let { title = {}, backgroundColor, geo = {}, series = [] } = options;
+  let { title={}, backgroundColor='#404a59', geo={}, series=[] } = options;
   return {
-      title: Obj.merge({
-          text: '',
-          left: 'center',
-          textStyle: {
-              color: '#fff'
-          }
+      title: Obj.merge({ // title属性优先级高于baseExConfig中
+        textStyle : {
+          // fontWeight  : 'normal',
+          color : '#fff'
+        },
+        top : 10
       },title),
-      backgroundColor: backgroundColor ||  '#404a59',
+      backgroundColor: backgroundColor,
       visualMap: {
           min: 0,
           max: 500,
@@ -46,7 +46,7 @@ export default type => options => {
 
       series : series.map(item => Obj.merge({
                 name : '',
-                type:type,
+                type: type,
                 coordinateSystem: 'geo',
                 data:[],
               },item))
