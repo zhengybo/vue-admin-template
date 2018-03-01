@@ -4,7 +4,7 @@ import { Loading } from 'element-ui'
 import md5 from 'js-md5';
 import apis from '@/js/api'
 
-let enterPage = '/main' //进入路由
+const enterPage = '/main' //进入路由
 const user = {
   state: {
     username: Cookie.getCookie('username'),

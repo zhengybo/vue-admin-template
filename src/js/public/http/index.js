@@ -75,35 +75,35 @@ const checkToken = function(code){
  * http 默认指向vue实例
  */
 const http = function(setting,exist,length){
-  let $LoadingServer = null;
-  setting.notify = setting.notify === undefined ? true : false;
-  $LoadingServer = setting.loading && Loading.service(Object.assign({
+  let $LoadingServer = null,
+      { notify = true, loading, publicFn, fail, success, catchFn } = setting;
+  $LoadingServer = loading && Loading.service(Object.assign({
     fullscreenLoading : true,
     spinner : "el-icon-loading",
     background : "rgba(0, 0, 0, 0.8)",
     customClass : 'fllLoading'
-  },setting.loading));
+  },loading));
   return fetchHttp.call(this,setting,exist,length)
     .then(json => {
-      setting.loading && $LoadingServer.close();
-      setting.publicFn && setting.publicFn.call(this,json);
+      loading && $LoadingServer.close();
+      publicFn && publicFn.call(this,json);
       if(!json.returnSuccess){
         if(!checkToken.call(this,json.returnErrCode))return;
-        setting.notify && this.$notify.error({
+        notify && this.$notify.error({
           title: '提示',
           message: json.returnErrMsg || '发生一个未知错误',
           position : 'bottom-right'
         });
-        setting.fail && setting.fail.call(this,json);
+        fail && fail.call(this,json);
         return;
       }
-      setting.success && setting.success.call(this,json);
+      success && success.call(this,json);
       return json;
     })
     .catch(res => {
-      setting.publicFn && setting.publicFn.call(this,{});
+      publicFn && publicFn.call(this,{});
       let timeout = res === 'timeout';
-      setting.loading && $LoadingServer.close();
+      loading && $LoadingServer.close();
       this.$notify({
         title: '提示',
         message:timeout ? '请求超时' : '请求失败,网络异常!',
@@ -111,8 +111,8 @@ const http = function(setting,exist,length){
         type : timeout ? 'warning' : 'error'
       });
       // if(!checkToken.call(this,'40002'))return;
-      setting.publicFn && setting.publicFn.call(this);
-      setting.catchFn && setting.catchFn.call(this);
+      publicFn && publicFn.call(this);
+      catchFn && catchFn.call(this);
     })
 }
 
@@ -133,4 +133,4 @@ const https = function(settings = [],exist){
   })
 }
 
-export  {http, https}
+export  { http, https }

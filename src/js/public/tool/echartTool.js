@@ -3,12 +3,13 @@
  */
 class echartTool {
   static setHeight(echart,options,target){ //设置 柱状图了宽度
-    let length = 0;
-    if(Array.isArray(options.series)){
-      length = (options.series[0].data && options.series[0].data.length || 10);
-      length *= options.series.length;
+    let length = 0,
+        { series } = options;
+    if(Array.isArray(series)){
+      length = (series[0].data && series[0].data.length || 10);
+      length *= series.length;
     }else {
-      length = (options.series.data && options.series.data.length || 10);
+      length = (series.data && options.series.data.length || 10);
     }
     length = length > 6 ? length : 6;
     echart.style.height = 40 * length + 'px';
