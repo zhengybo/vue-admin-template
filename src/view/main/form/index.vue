@@ -26,7 +26,7 @@
 <script>
 
 export default {
-  name : 'home',
+  name : 'forms',
   data(){
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6 || value.length >14) {

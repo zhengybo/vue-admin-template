@@ -48,13 +48,13 @@
         :type="item.type || 'info' "
          @click='item.click && item.click()'>{{item.text}}</el-button>
         <el-button
-        v-if="options.resetMessage.name"
+        v-if="options.resetMessage.show"
         size="small"
         type="info"
          @click='resetFields("formData")'>
          {{options.resetMessage.name}}</el-button>
          <el-button
-         v-if="options.submitMessage.name"
+         v-if="options.submitMessage.show"
          size="small"
          type="primary"
          @click='onSubmit("formData")'>{{options.submitMessage.name}}
@@ -135,6 +135,7 @@ export default {
     options (){ // 可选属性
       return Obj.merge({
         resetMessage : {//默认属性
+          show : true,
           name : '重置',
           text : '你确定要重置这些信息？',
           title : '提示',
@@ -145,6 +146,7 @@ export default {
           confirmButtonText : "确定"
         },
         submitMessage : {
+          show : true,
           name : '提交',
           afterSubmit : void 0,
           beforeSubmit : void 0

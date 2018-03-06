@@ -79,12 +79,11 @@ export default {
   },
   watch : {
     search(){
+      let lastPage = this.defaultParam.currPage;
       this.defaultParam.currPage =1;
-      this.getData();
-    },
-    // 'table.tableData' : function(){
-    //
-    // }
+      // 需要判断下 不是第一页 handleCurrentChange 触发
+      if(lastPage == 1)this.getData();
+    }
   },
   computed : {
 
@@ -114,14 +113,14 @@ export default {
 
   methods: {
     handleSizeChange(val) {
-      this.defaultParam.currPage =1;
+      let lastPage = this.defaultParam.currPage;
+      this.defaultParam.currPage = 1;
       this.defaultParam.pageSize = val;
-      this.getData()
+      if(lastPage == 1) this.getData()
       // console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       this.defaultParam.currPage = val;
-      // console.log(`当前页: ${val}`);
       this.getData()
     },
     getData(){
@@ -145,8 +144,8 @@ export default {
         },
         success : (json) => {
           this.table.tableData.length = 0;
-          this.table.pageTotals = json.totalRows
-          this.$emit('interface',json,this.table.tableData)
+          this.table.pageTotals = json.totalRow;
+          this.$emit('interface',json,this.table)
 
         },
         fail : (json) => {

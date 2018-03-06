@@ -80,7 +80,6 @@ export default {
 
     return {
       lang : lang,
-
       initialIndex : 0,
       lastIndex : 0,
       curIndex : 0
@@ -97,8 +96,7 @@ export default {
       let flag = false,
           timer = null,
           direct = 0,
-          $refs = this.$refs,
-          carousel = $refs.carousel,
+          { carousel, container} = this.$refs,
           wheel = ~navigator.userAgent.indexOf("Firefox") ? 'DOMMouseScroll' : 'mousewheel';
       const scrollFunc = (e) => {
         if(this.sum <= this.splitGap) return;
@@ -115,14 +113,20 @@ export default {
         clearTimeout(timer);
         timer = setTimeout(() => { flag = false; },100);
       }
-      $refs.container.addEventListener(wheel,scrollFunc,false)
+      container.addEventListener(wheel,scrollFunc,false)
     },
     close (name){ //关闭
-      this.$store.dispatch('deleteTabs',{ name : name }).then(res => {
-        this.$route.name == name &&  this.$router.push(res.path);
+      const {
+        $store : { dispatch },
+        $route : { name : _name},
+        $router,
+        $nextTick
+       } = this;
+      dispatch('deleteTabs',{ name : name }).then(res => {
+        _name == name &&  $router.push(res.path);
         //需要在跳转后 再移除内存不然在删除自己的时候会内存泄漏!!
-        this.$nextTick(() => {
-          this.$store.dispatch('delCacheView',name);
+        $nextTick(() => {
+          dispatch('delCacheView',name);
         })
       });
     },
