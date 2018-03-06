@@ -69,11 +69,11 @@ export default {
     },
     deleteTabs({commit,state},payload){
       commit('DELETE_TABS',payload.name);
-      commit('DEL_CACHE_VIEW',payload.name);
+      // commit('DEL_CACHE_VIEW',payload.name);
       let options = state.speedTabs.options;
       // console.log(state.speedTabs.options.slice(-1));
       // return options[options.length-1];
-      return state.speedTabs.options.slice(-1)[0]
+      return state.speedTabs.options.slice(-1)[0];
     },
     addCacheView({commit,state},name){
       commit('ADD_CACHE_VIEW',name);

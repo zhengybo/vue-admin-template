@@ -120,6 +120,10 @@ export default {
     close (name){ //关闭
       this.$store.dispatch('deleteTabs',{ name : name }).then(res => {
         this.$route.name == name &&  this.$router.push(res.path);
+        //需要在跳转后 再移除内存不然在删除自己的时候会内存泄漏!!
+        this.$nextTick(() => {
+          this.$store.dispatch('delCacheView',name);
+        })
       });
     },
     change (index){

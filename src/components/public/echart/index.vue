@@ -136,7 +136,7 @@ export default {
       })
     }
 	},
-  destroyed(){
+  beforeDestroy(){
     window.removeEventListener("resize", this.echart.resize);
   }
 }
