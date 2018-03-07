@@ -6,6 +6,27 @@ export default (_import) => ({
   meta : {
     // menu : false
     icon : 'income',
-    libRights : true
+    grider : false,
+    libRights : true,
+    children : [{
+
+      path: '/main/home/detail',
+      name: 'homeDetail',
+      component: _import('main/home/detail'),
+      children : [{
+        path: '/main/home/detail1',
+        name: 'homeDetail1',
+        component: _import('main/home/detail'),
+      }],
+
+      meta : {
+        children : [{
+          path: '/main/home/detail/1',
+          name: 'homeDetail-1',
+          component: _import('main/home/detail'),
+        }]
+      }
+
+    }]
   }
 })

@@ -66,12 +66,12 @@
     :table="table"
     :setting='setting'
     :search='search'>
-<!--
+
       <el-table-column  label="激活时间"slot="createdTime" >
         <template slot-scope="scope">
             <span @click="click(scope.$index)">删除</span>
         </template>
-      </el-table-column> -->
+      </el-table-column>
     </table-pagination>
 
   </div>

@@ -46,7 +46,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       filename: 'index.html',
       template: 'index.html',
       env : 'development',
-      theme : './static/js/theme.js', 
+      theme : './static/js/theme.js',
       inject: true,
     }),
   ]

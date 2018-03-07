@@ -14,6 +14,14 @@
     :table="table"
     :setting='setting'
     :search='search'>
+      <el-table-column  label="激活时间" slot="act" >
+        <template slot-scope="scope">
+          <el-button
+          @click="detail(scope.row)"
+          size="small"
+          type="primary">详情</el-button>
+        </template>
+      </el-table-column>
     </table-pagination>
   </div>
 </template>
@@ -38,7 +46,8 @@ export default {
         tableHeader : [
           {prop : 'number',lable : "数量"},
           {prop : 'age',lable : '年龄',width : 180},
-          {prop : 'name',lable : '名字',width : 180}
+          {prop : 'name',lable : '名字',width : 180},
+          {prop : 'act',lable : '操作',width : 180, slot : true}
         ],
         tableData: [
         ]
@@ -126,6 +135,9 @@ export default {
         age : item.age,
         number : item.number
       }))
+    },
+    detail(index){
+      console.log(index);
     },
     success(obj){
       if(!obj) return ;

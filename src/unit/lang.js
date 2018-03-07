@@ -1,6 +1,9 @@
 export default {
   home : '首页',
   main : '首页',
+  homeDetail : '详情',
+  'homeDetail-1' : '详情-1',
+  homeDetail1 : '详情1',
   form : '表单',
   user : '个人中心',
   setting : '设置',

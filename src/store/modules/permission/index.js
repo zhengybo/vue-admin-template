@@ -5,6 +5,7 @@ function getPermissionRouter(routers = [],rights = [],noRights = [],deep = 0){
   return routers.filter(route => {
     Obj.cover(route.meta = route.meta || {},{ //初始化部分默认数据 菜单数据
       menu : true,
+      grider : true,
       cache : true,
       // tooltip : deep == 1,
       libRights : false
