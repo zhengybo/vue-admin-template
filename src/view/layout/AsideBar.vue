@@ -66,7 +66,7 @@ export default {
       if(value){
         setTimeout(() => {
           this.isHidden = false;
-        },800)
+        },700)
       }else {
         this.isHidden = true;
       }

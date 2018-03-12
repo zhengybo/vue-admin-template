@@ -5,9 +5,7 @@
   <el-main class="warp-contain">
     <!-- <scrollbar scrollbar="always"> -->
       <!-- <div class="warp-main-inner"> -->
-        <keep-alive :include='cacheViews'>
-          <router-view v-if="reload"></router-view>
-        </keep-alive>
+        <keep-view/>
       <!-- </div> -->
     <!-- </scrollbar> -->
   </el-main>
@@ -16,14 +14,7 @@
 
 <script>
 export default {
-  computed  : {
-    cacheViews(){
-      return this.$store.state.tabNavigation.cacheViews
-    },
-    reload(){
-      return this.$store.state.action.reload
-    }
-  }
+
 }
 </script>
 
@@ -47,18 +38,5 @@ export default {
   overflow: auto;
   overflow-y: scroll;
   max-height: 100%;
-}
-
-.scrollbar{
-  height: 100%;
-  .el-scrollbar__wrap{
-    overflow-x:hidden;
-  }
-  .warp-main{
-    height: 100%;
-    .el-scrollbar__view{
-      height: 100%;
-    }
-  }
 }
 </style>

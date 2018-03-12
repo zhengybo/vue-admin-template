@@ -11,6 +11,8 @@
  *    cache  : 是否该路由被缓存                               default => true
  *    children : 同级路由 但不会显示在menu里面 在导航栏里面显示
  *    libRights : 固有权限 设置为true则不会经过权限判定直接访问 default => false
+ *    grider : 是否在导航上显示 default => true
+ *    query : 携带上一些标记 default => {}
  *  }
  *
  */

@@ -9,17 +9,18 @@
     @success="success"
     />
     <table-pagination
-    initLo
     @interface="_interface"
     :table="table"
     :setting='setting'
     :search='search'>
       <el-table-column  label="激活时间" slot="act" >
         <template slot-scope="scope">
-          <el-button
-          @click="detail(scope.row)"
-          size="small"
-          type="primary">详情</el-button>
+          <router-link to="/main/home/detail">
+            <el-button
+            @click="detail(scope.row)"
+            size="small"
+            type="primary">图例</el-button>
+          </router-link>
         </template>
       </el-table-column>
     </table-pagination>

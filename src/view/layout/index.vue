@@ -2,7 +2,7 @@
   <el-container id="frame">
     <aside-bar width="200px"  class="el-aside"></aside-bar>
     <el-container id="contain-root">
-      <el-header  id="header">
+      <el-header class="pd-0"  id="header">
         <nav-bar></nav-bar>
         <sub-nav></sub-nav>
         <pull-switch class="pull-contain"></pull-switch>
@@ -56,17 +56,11 @@ export default {
       height: auto!important;
     }
 
-    .el-header{
-      padding: 0;
-    }
-
     .NavHeader .NavBar{
       padding: 0;
-
     }
 
     .NavHeader {
-      // height: 84px!important;
 
       .el-container{
         height: 100%;

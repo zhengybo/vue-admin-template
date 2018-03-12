@@ -25,7 +25,7 @@
           <router-link
           v-for="(tag,i) in item"
           class="tabs-view l"
-          :to="tag.path"
+          :to="{path : tag.path,query : tag.query || {}}"
           :key="tag.path">
             <el-tag
               size="small"
@@ -61,6 +61,7 @@ export default {
     splitGap (){
       return this.$store.state.tabNavigation.number
     },
+
     splitTags(){
       let options = this.tags.options,
           gap = this.splitGap,
@@ -70,6 +71,7 @@ export default {
         result[result.length] = options.filter((v,k) => k>=i&&k<i+gap);
       }
       if(!result.length)result[result.length] = []; //保持滑块
+      console.log(result);
       return result;
     },
     local (){ //定位
@@ -141,7 +143,8 @@ export default {
       if(meta.cache){
         this.$store.dispatch('queryTabs',{
           path : path,
-          name : name
+          name : name,
+          query : meta.query
         }).then((value) => {
           let index = this.tags.options.findIndex(item => item.key == name);
           if(!~index)return; // 没有在菜单栏内的路由

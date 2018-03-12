@@ -8,22 +8,55 @@ export default (_import) => ({
     icon : 'income',
     grider : false,
     libRights : true,
-    children : [{
 
+    children : [{
       path: '/main/home/detail',
       name: 'homeDetail',
+      redirect : '/main/home/detail/default',
       component: _import('main/home/detail'),
-      children : [{
-        path: '/main/home/detail1',
-        name: 'homeDetail1',
-        component: _import('main/home/detail'),
-      }],
+
+      children : [
+        {
+          path: '/main/home/detail/chart1',
+          name: 'detailChart1',
+          component: _import('main/home/charts/chart1')
+        },
+        {
+          path: '/main/home/detail/chart2',
+          name: 'detailChart2',
+          component: _import('main/home/charts/chart2')
+        },
+        {
+          path: '/main/home/detail/chart3',
+          name: 'detailChart3',
+          component: _import('main/home/charts/chart3')
+        },
+        {
+          path: '/main/home/detail/default',
+          name: 'detaiDefault',
+          component: _import('main/home/detaiDefault'),
+          meta : {
+            // cache :true,
+            grider : false
+          }
+        }
+      ],
 
       meta : {
+
         children : [{
-          path: '/main/home/detail/1',
-          name: 'homeDetail-1',
-          component: _import('main/home/detail'),
+          path: '/main/home/detail/list',
+          name: 'detailList',
+          component: _import('main/home/list'),
+          meta : {
+            cache : true,
+
+            query : {
+              id : 1
+            },
+
+          },
+
         }]
       }
 

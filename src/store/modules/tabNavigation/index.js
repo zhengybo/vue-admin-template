@@ -21,7 +21,8 @@ export default {
       state.speedTabs.options.push({
         name :lang[payload.name],
         key : payload.name,
-        path : payload.path
+        path : payload.path,
+        query : payload.query
       });
       state.speedTabs.default = payload.name;
     },

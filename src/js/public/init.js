@@ -70,7 +70,7 @@ function forNavMetaGrider(arr = [], temp = [], records = {}, routes = []){
       forNavMetaGrider(children,copyTemp,records,routes);
     }
     if(cld){
-      forNavGrider(cld,records,copyTemp);
+      forNavGrider(cld,copyTemp,records);
     }
     routes.push(item); // 调整引用
     delete meta.children;
@@ -79,7 +79,7 @@ function forNavMetaGrider(arr = [], temp = [], records = {}, routes = []){
 }
 
 //计算路由导航信息
-function forNavGrider(arr = [], record = {}, temp = []){ //计算导航信息
+function forNavGrider(arr = [], temp = [], record = {} ){ //计算导航信息
   arr.forEach(item => {
     let copyTemp = [...temp],
         { name, path, children : cld } = item,
@@ -95,63 +95,17 @@ function forNavGrider(arr = [], record = {}, temp = []){ //计算导航信息
       arr.push(...routes);
     }
     record[path] = copyTemp;
-    if(cld && menu){
-      forNavGrider(cld,record,copyTemp);
+    // if(cld && menu){
+    if(cld){
+      forNavGrider(cld,copyTemp,record);
     }
   })
   return record;
 }
-//
-// function forNavMetaGrider(arr = [], temp = [], records = {}, routes = []){
-//   arr.forEach(item => {
-//     let copyTemp = [...temp],
-//         meta = item.meta = item.meta || {},
-//         { name, path, children : cld } = item;
-//     Obj.cover(item.meta,defaultMata);
-//     let { children, link = true, grider } = meta;
-//     if(grider){
-//       copyTemp[copyTemp.length] = { name, path, link };
-//     }
-//     records[path] = copyTemp;
-//     if(children){
-//       forNavMetaGrider(children,copyTemp,records,routes);
-//     }
-//     if(cld){
-//       forNavGrider(cld,copyTemp,records);
-//     }
-//     routes.push(item); // 调整引用
-//     delete meta.children;
-//   })
-//   return {records,routes};
-// }
+
 
 //计算路由导航信息
-// function forNavGrider(arr = [], temp = [], records = {}, routes){ //计算导航信息
-//   arr.forEach(item => {
-//     let copyTemp = [...temp],
-//         { name, path, children : cld } = item,
-//         meta = item.meta = item.meta || {};
-//     Obj.cover(item.meta,defaultMata);
-//     let { menu, link = !cld, children, grider } = meta;
-//     if(grider){
-//       copyTemp[copyTemp.length] = { name, path, link };
-//     }
-//     records[path] = copyTemp;
-//     if(children){
-//       if(routes){
-//         forNavGrider(children,copyTemp,records,routes);
-//       }else {
-//         let { records:record,routes:route } = forNavGrider(children,copyTemp);
-//         Object.assign(records,record);
-//         arr.push(...route);
-//       }
-//     }
-//     if(cld){
-//       forNavGrider(cld, copyTemp, records);
-//     }
-//   })
-//   return {records,routes};
-// }
+
 
  /* 生成导航的state数据 */
 // export const navData = (data) => {
@@ -163,6 +117,5 @@ function forNavGrider(arr = [], record = {}, temp = []){ //计算导航信息
 // }
 
 export const navGrider = (data) => {
-  let r = forNavGrider(data)
-  return r;
+  return forNavGrider(data);
 }
