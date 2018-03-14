@@ -54,6 +54,7 @@ import { Obj } from './tool'
 //   return result;
 // }
  //计算meta节点信息
+const caches = [];
 let defaultMata = {  menu : false, cache : false, grider : true, };
 function forNavMetaGrider(arr = [], temp = [], records = {}, routes = []){
   arr.forEach(item => {
@@ -61,6 +62,7 @@ function forNavMetaGrider(arr = [], temp = [], records = {}, routes = []){
         meta = item.meta = item.meta || {},
         { name, path, children : cld } = item;
     Obj.cover(item.meta,defaultMata);
+    if(meta.cache)caches[caches.length] = name; // 记录需要缓存的路由
     let { children, link = true, grider } = meta;
     if(grider){
       copyTemp[copyTemp.length] = { name, path, link };
@@ -85,6 +87,7 @@ function forNavGrider(arr = [], temp = [], record = {} ){ //计算导航信息
         { name, path, children : cld } = item,
         meta = item.meta = item.meta || {};
     Obj.cover(item.meta,defaultMata);
+    if(meta.cache)caches[caches.length] = name; // 记录需要缓存的路由
     let { menu, link = !cld, children, grider } = meta;
     if(grider){
       copyTemp[copyTemp.length] = { name, path, link };
@@ -115,7 +118,9 @@ function forNavGrider(arr = [], temp = [], record = {} ){ //计算导航信息
 // export const getName = (data) => {
 //   return getRouterName(JSON.parse(JSON.stringify(data)));
 // }
-
 export const navGrider = (data) => {
   return forNavGrider(data);
+}
+export const getCaches = () => {
+  return caches;
 }

@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
         store.dispatch('getUserInfo').then(({rights}) => {
           store.dispatch('productRouter',{rights})
           .then(({permissionRouter,noPermissionRouter}) => {
-            console.log(permissionRouter);
+            // console.log(permissionRouter);
             store.commit('SET_NAVIGATION',navGrider(permissionRouter));
             completedRouters.push( //增加全部路由
             ...permissionRouter,

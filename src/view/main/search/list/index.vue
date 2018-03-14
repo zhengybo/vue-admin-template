@@ -12,6 +12,7 @@
 
 <script>
 export default {
+  name : 'search2'
 }
 </script>
 

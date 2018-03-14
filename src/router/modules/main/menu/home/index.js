@@ -11,9 +11,9 @@ export default (_import) => ({
 
     children : [{
       path: '/main/home/detail',
-      name: 'homeDetail',
+      name: 'homeCharts',
       redirect : '/main/home/detail/default',
-      component: _import('main/home/detail'),
+      component: _import('main/home/homeCharts'),
 
       children : [
         {
@@ -36,14 +36,14 @@ export default (_import) => ({
           name: 'detaiDefault',
           component: _import('main/home/detaiDefault'),
           meta : {
-            // cache :true,
+            cache :true,
             grider : false
           }
         }
       ],
 
       meta : {
-
+        cache : true,
         children : [{
           path: '/main/home/detail/list',
           name: 'detailList',

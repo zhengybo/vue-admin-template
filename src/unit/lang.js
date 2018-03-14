@@ -1,9 +1,10 @@
 export default {
   home : '首页',
   main : '首页',
-  homeDetail : '图例',
+  homeCharts : '图例',
   'homeDetail-1' : '详情-1',
   homeDetail1 : '详情1',
+  detaiDefault : '默认图表',
   detailChart1 : '图1',
   detailChart2 : '图2',
   detailChart3 : '图3',

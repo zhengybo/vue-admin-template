@@ -26,6 +26,12 @@ export default {
       });
       state.speedTabs.default = payload.name;
     },
+    UPADTE_QUERY : (state, payload) => {
+      let tmp = state.speedTabs.options.find(item => item.key == payload.name);
+      if(tmp){
+        Object.assign(tmp.query,payload.query)
+      }
+    },
     UPDATE_TABS : (state,name) => {
       let options = state.speedTabs.options,
           i = options.findIndex(item => item.key == name);
@@ -40,20 +46,21 @@ export default {
     SET_NAMES : (state,names) => {
       state.names = names
     },
-    'ADD_CACHE_VIEW' : (state, view) => {
+    ADD_CACHE_VIEW : (state, view) => {
       let cacheViews = state.cacheViews;
       if(!~cacheViews.indexOf(view)){
         cacheViews.push(view);
       }
+      console.log(cacheViews);
     },
-    'DEL_CACHE_VIEW' : (state, view) => {
+    DEL_CACHE_VIEW : (state, view) => {
       let cacheViews = state.cacheViews,
           index = cacheViews.indexOf(view);
       if(~index){
         cacheViews.splice(index,1);
       }
     },
-    'SET_NUMBER' : (state, number) => {
+    SET_NUMBER : (state, number) => {
       state.number = number;
       localStorage.setItem('TABS-NUMBER',number);
     }
@@ -68,6 +75,9 @@ export default {
         commit('UPDATE_TABS',payload.name)
       }
     },
+    updateQuery({commit},payload){
+      commit('UPADTE_QUERY',payload)
+    },
     deleteTabs({commit,state},payload){
       commit('DELETE_TABS',payload.name);
       // commit('DEL_CACHE_VIEW',payload.name);
@@ -80,7 +90,9 @@ export default {
       commit('ADD_CACHE_VIEW',name);
     },
     delCacheView({commit,state},name){
+      let preLen = state.cacheViews.length
       commit('DEL_CACHE_VIEW',name);
+      return preLen != state.cacheViews.length;
     },
     setNumber({commit,state},number){
       commit('SET_NUMBER',number);

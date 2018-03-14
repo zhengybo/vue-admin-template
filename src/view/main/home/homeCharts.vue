@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="">
-    这是详情组件
+    这是图例组件
     <table-pagination
     @interface="_interface"
     :table="table"
@@ -8,11 +8,14 @@
     :search='search'>
       <el-table-column  label="激活时间" slot="act" >
         <template slot-scope="scope">
-          <router-link to="/main/home/detail/list">
+          <link-to :to="{name : 'detailList',query : {id : scope.row.id}}">
             <el-button
             size="small"
             type="primary">列表详情</el-button>
-          </router-link>
+          </link-to>
+          <!-- <router-link to="/main/home/detail/list">
+
+          </router-link> -->
         </template>
       </el-table-column>
     </table-pagination>
@@ -24,13 +27,13 @@
       :label="item.name"
       :name="item.value"></el-tab-pane>
     </el-tabs>
-    <router-view ></router-view>
+    <keep-view ></keep-view>
   </div>
 </template>
 
 <script>
 export default {
-
+  name : 'homeCharts',
   data(){
     return {
       tab : '',
@@ -57,14 +60,13 @@ export default {
       list : [
         {name : '图1',value : 'chart1',link : '/main/home/detail/chart1'},
         {name : '图2',value : 'chart2',link : '/main/home/detail/chart2'},
-        {name : '图3',value : 'chart3',link : '/main/home/detail/chart3'},
+        {name : '图3',value : 'chart3',link : '/main/home/detail/chart3'}
       ]
     }
   },
   watch : {
     $route(v){
-      console.log(v);
-      v.matched.slice(-1).name
+      // v.matched.slice(-1).name
     }
   },
   methods : {
@@ -73,8 +75,9 @@ export default {
       this.table.tableData = data.data.map((item) => ({
         name : item.name,
         age : item.age,
-        number : item.number
-      }))
+        number : item.number,
+        id : item.id
+      }));
     },
     handleClick(index,v){
       this.$router.push(

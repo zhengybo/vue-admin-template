@@ -34,6 +34,10 @@ export default {
       },
     }
   },
+  created(){
+    let { query, name } = this.$route;
+    this.$store.dispatch('updateQuery',{ query, name });
+  },
   methods : {
     _interface(data){
       // console.log(data);

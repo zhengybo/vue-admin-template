@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="">
     默认图例
+    <el-input></el-input>
   </div>
 </template>
 

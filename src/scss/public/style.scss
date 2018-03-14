@@ -54,6 +54,9 @@ input,textarea{
 .vhide{
 	overflow: hidden;
 }
+.cursor{
+	cursor: pointer;
+}
 a{
 	font-weight: normal;
 	text-decoration: none!important;
@@ -98,6 +101,10 @@ $lineHeight : 0 24 40;
 	.l-h-#{$value} {
 		line-height: $value * 1px;
 	}
+}
+
+.h--100{
+	height: 100%;
 }
 
 //动画
