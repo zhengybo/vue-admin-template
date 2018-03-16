@@ -138,7 +138,7 @@ export default {
       }))
     },
     detail(index){
-      console.log(index);
+      // console.log(index);
     },
     success(obj){
       if(!obj) return ;

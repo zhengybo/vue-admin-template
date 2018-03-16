@@ -128,7 +128,7 @@ export default {
           flag = this.flag,
           defaultParam = this.defaultParam;
       this.loading = true;
-      this.$root.$http({
+      this.$root.$https([{
         url :setting.url,
         type : setting.type || 'GET',
         data : {
@@ -155,7 +155,7 @@ export default {
           this.nodata = '网络异常 请刷新或重新请求';
         },
         notify : setting.notify
-      },this.exist)
+      }],this.exist)
     }
   }
 }

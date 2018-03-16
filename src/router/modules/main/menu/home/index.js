@@ -36,6 +36,7 @@ export default (_import) => ({
           name: 'detaiDefault',
           component: _import('main/home/detaiDefault'),
           meta : {
+            cacheViews : ['homeCharts','detaiDefault'],
             cache :true,
             grider : false
           }

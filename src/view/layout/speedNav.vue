@@ -41,15 +41,14 @@
         </div>
       </el-carousel-item>
     </el-carousel>
-    <div
-    v-if="local"
-    @click="location"
-    class="location"></div>
+    <right-menu class="r-menu"/>
+    <div v-if="local" @click="location" class="location"></div>
   </div>
 </template>
 
 <script>
 import lang from '@/unit/lang'
+import { RightMenu } from '@/components/self'
 export default {
   computed: {
     tags() {
@@ -118,16 +117,21 @@ export default {
     },
     close (name){ //关闭
       const {
+        tags : { options },
         $store : { dispatch },
         $route : { name : _name},
         $router,
         $nextTick
        } = this;
+       let tmp = options.find(item => name = item.key),
+           cacheViews = tmp.cacheViews;
       dispatch('deleteTabs',{ name : name }).then(res => {
         _name == name &&  $router.push(res.path);
         //需要在跳转后 再移除内存不然在删除自己的时候会内存泄漏!!
         $nextTick(() => {
-          dispatch('delCacheView',name);
+          cacheViews
+            ? dispatch('delCacheViews',cacheViews)
+            :  dispatch('delCacheView',name);
         })
       });
     },
@@ -138,12 +142,13 @@ export default {
       this.$refs.carousel.setActiveItem(this.curIndex);
     },
     routes (){
-      let { path, name, meta } = this.$route;
-      if(meta.cache){
+      let { path, name, meta : { cache, query, cacheViews } } = this.$route;
+      if(cache){
         this.$store.dispatch('queryTabs',{
-          path : path,
-          name : name,
-          query : meta.query
+          path,
+          name,
+          query,
+          cacheViews
         }).then((value) => {
           let index = this.tags.options.findIndex(item => item.key == name);
           if(!~index)return; // 没有在菜单栏内的路由
@@ -164,6 +169,9 @@ export default {
     $route() {
       this.routes();
     }
+  },
+  components : {
+    RightMenu
   }
 }
 </script>
@@ -243,6 +251,13 @@ export default {
       &:active{
         transform: scale(1.1);
       }
+    }
+
+    .r-menu{
+      position: absolute;
+      left: 0;
+      top : 0;
+      z-index: 989;
     }
   }
 

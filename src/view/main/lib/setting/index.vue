@@ -76,7 +76,7 @@ export default {
           }
         },
         submitMessage : {
-          name : false
+          show : false
         }
       },
       attrs : {

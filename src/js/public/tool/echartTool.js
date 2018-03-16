@@ -6,7 +6,7 @@ class echartTool {
     let length = 0,
         { series } = options;
     if(Array.isArray(series)){
-      length = (series[0].data && series[0].data.length || 10);
+      length = (series[0].data && series[0].data.length || 5);
       length *= series.length;
     }else {
       length = (series.data && options.series.data.length || 10);

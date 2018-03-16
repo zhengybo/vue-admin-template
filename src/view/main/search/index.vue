@@ -1,5 +1,7 @@
 <template lang="html">
   <div class="">
+    查询节点
+    <input type="text">
     <keep-alive :include='cacheViews'>
       <router-view></router-view>
     </keep-alive>
@@ -9,7 +11,7 @@
 <script>
 
 export default {
-  name : 'search-main',
+  name : 'search',
   computed  : {
     cacheViews(){
       return this.$store.state.tabNavigation.cacheViews

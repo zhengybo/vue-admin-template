@@ -147,8 +147,7 @@ export default {
     },
     resize(e){ //重新计算
       this.init(); // 重新初始化数据
-      let { transiteY, ratio, $height } = this,
-          { dValue } = $height;
+      let { transiteY, ratio, $height :{ dValue } } = this;
       if(ratio >= 1){
         this.scrollTo(0);
       }else {

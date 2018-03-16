@@ -100,4 +100,37 @@ export default class Obj extends Object{
     })
     return obj;
   }
+
+  /**
+   * 安全的查询对象
+   */
+
+  static  parsePath (path) {
+    if (/[^\w.$]/.test(path)) {
+      return
+    }
+    var segments = path.split('.');
+    return function (obj) {
+      for (var i = 0; i < segments.length; i++) {
+        if (!obj) { return }
+        obj = obj[segments[i]];
+      }
+      return obj
+    }
+  }
+
+  static  setObjValue (path,value) {
+    var segments = path.split('.');
+    return function (obj) {
+      for (var i = 0; i < segments.length-1; i++) {
+
+        if(obj[segments[i]] === void 0){
+          obj[segments[i]] = {};
+        }
+        if(!Obj.isObject(obj))return ;
+        obj = obj[segments[i]];
+      }
+      obj[segments[segments.length-1]] = value;
+    }
+  }
 }

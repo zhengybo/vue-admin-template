@@ -13,5 +13,6 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'scss/public/index.scss';
 @import 'scss/views/index.scss';
 </style>

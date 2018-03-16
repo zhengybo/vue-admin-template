@@ -18,11 +18,13 @@ export default {
   },
   mutations : {
     ADD_TABS : (state,payload) => {
+      // console.log(payload.cacheViews);
       state.speedTabs.options.push({
         name :lang[payload.name],
         key : payload.name,
         path : payload.path,
-        query : payload.query
+        query : payload.query,
+        cacheViews : payload.cacheViews
       });
       state.speedTabs.default = payload.name;
     },
@@ -51,7 +53,6 @@ export default {
       if(!~cacheViews.indexOf(view)){
         cacheViews.push(view);
       }
-      console.log(cacheViews);
     },
     DEL_CACHE_VIEW : (state, view) => {
       let cacheViews = state.cacheViews,
@@ -67,12 +68,15 @@ export default {
   },
   actions: {
     queryTabs({state,commit},payload){
-      let flag = state.speedTabs.options.some(item => item.key == payload.name);
+      let { name, cacheViews } = payload;
+      let flag = state.speedTabs.options.some(item => item.key == name);
       if(!flag){
-        commit('ADD_CACHE_VIEW',payload.name);
+        cacheViews
+        ? cacheViews.forEach(v => commit('ADD_CACHE_VIEW', v))
+        : commit('ADD_CACHE_VIEW', name);
         commit('ADD_TABS',payload);
       }else {
-        commit('UPDATE_TABS',payload.name)
+        commit('UPDATE_TABS',name)
       }
     },
     updateQuery({commit},payload){
@@ -92,6 +96,11 @@ export default {
     delCacheView({commit,state},name){
       let preLen = state.cacheViews.length
       commit('DEL_CACHE_VIEW',name);
+      return preLen != state.cacheViews.length;
+    },
+    delCacheViews({commit,state},views = []){
+      let preLen = state.cacheViews.length
+      views.forEach(name => commit('DEL_CACHE_VIEW',name));
       return preLen != state.cacheViews.length;
     },
     setNumber({commit,state},number){

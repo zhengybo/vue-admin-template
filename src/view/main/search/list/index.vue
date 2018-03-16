@@ -12,7 +12,10 @@
 
 <script>
 export default {
-  name : 'search2'
+  name : 'search2',
+  destroyed(){
+    console.log('----');
+  }
 }
 </script>
 
