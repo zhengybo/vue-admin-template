@@ -3,10 +3,12 @@
   <div
     ref='container'
     class='speed-container'
+    @contextmenu.prevent
     :style="{
       'width' : `${splitGap*126+90}px`
     }">
     <el-carousel
+
       ref="carousel"
       indicator-position="none"
       @change="change"
@@ -19,6 +21,7 @@
       :key="index">
         <div
           class="tabs-view-frame"
+
           :style="{
             'width' :`${splitGap*124}px`
           }">
@@ -27,21 +30,30 @@
           class="tabs-view l"
           :to="{path : tag.path,query : tag.query || {}}"
           :key="tag.path">
-            <el-tag
-              size="small"
-              :type="tag.key === tags.default ? '' : 'info'"
-              :class="[tag.key === tags.default ? 'tag-active' : '','tag-item']"
-              :closable="splitTags[0].length > 1"
-               @close.prevent.stop='close(tag.key)'>
-                <template>
-                  <span :title="tag.name" class="linkName">{{tag.name}}</span>
-                </template>
-            </el-tag >
+            <span @contextmenu.prevent="contextmenu(tag.key,$event)">
+              <el-tag
+                size="small"
+                :type="tag.key === tags.default ? '' : 'info'"
+                :class="[tag.key === tags.default ? 'tag-active' : '','tag-item']"
+                :closable="splitTags[0].length > 1"
+                 @close.prevent.stop='close([tag.key])'
+                 >
+                  <template>
+                    <span :title="tag.name" class="linkName">{{tag.name}}</span>
+                  </template>
+              </el-tag >
+            </span>
           </router-link>
         </div>
       </el-carousel-item>
-    </el-carousel>
-    <right-menu class="r-menu"/>
+    </el-carousel >
+    <right-menu
+    v-if="contextmenuAttr.show"
+    @closeCurrent="closeCurrent"
+    @closeOther="closeOther"
+    @closeRight="closeRight"
+    @closeAll="closeAll"
+    :attr="contextmenuAttr" class="r-menu"/>
     <div v-if="local" @click="location" class="location"></div>
   </div>
 </template>
@@ -82,7 +94,13 @@ export default {
       lang : lang,
       initialIndex : 0,
       lastIndex : 0,
-      curIndex : 0
+      curIndex : 0,
+      contextmenuAttr : {
+        show : false,
+        left : 100,
+        top : 0,
+        crrent : null
+      }
     }
   },
   created(){
@@ -115,23 +133,32 @@ export default {
       }
       container.addEventListener(wheel,scrollFunc,false)
     },
-    close (name){ //关闭
+    close(names = []){
+      if(!names.length)return ;
       const {
-        tags : { options },
+        tags : { options, default : _default },
         $store : { dispatch },
-        $route : { name : _name},
         $router,
         $nextTick
        } = this;
-       let tmp = options.find(item => name = item.key),
-           cacheViews = tmp.cacheViews;
-      dispatch('deleteTabs',{ name : name }).then(res => {
-        _name == name &&  $router.push(res.path);
+       let tmp = options.filter(item => ~names.indexOf(item.key));  //被删除项
+      dispatch('deleteTabs',names).then(res => {
+        let exist = !~names.indexOf(_default);
+        if(!exist){ //是否当前当前页面的tab还存在
+          if(!options.length){
+            $router.push('/main/home');
+          }else{
+            $router.push(res.path)
+          }
+        }
         //需要在跳转后 再移除内存不然在删除自己的时候会内存泄漏!!
         $nextTick(() => {
-          cacheViews
-            ? dispatch('delCacheViews',cacheViews)
-            :  dispatch('delCacheView',name);
+          if(!options.length) tmp =  tmp.filter(v => v.key !='home');
+          tmp.forEach(item => {
+            item.cacheViews
+              ? dispatch('delCacheViews',item.cacheViews)
+              :  dispatch('delCacheView',item.key);
+          })
         })
       });
     },
@@ -163,11 +190,46 @@ export default {
       if(cur == this.lastIndex)return;
       this.lastIndex = cur;
       this.$refs.carousel.setActiveItem(cur);
-    }
+    },
+    contextmenu(key,e){
+      let { $route : { name }, tags : { options} } = this;
+      if(name == 'home' && options.length == 1){
+        return;
+      }
+      Object.assign(this.contextmenuAttr,{
+        show : true,
+        left  : e.clientX,
+        top : e.clientY,
+        current : key
+      })
+    },
+    hideMenu(){
+      this.contextmenuAttr.show = false
+    },
+    closeCurrent(k){
+      this.close([k]);
+    },
+    closeOther(k){
+      let {tags : { options }, contextmenuAttr : { current : name } } = this;
+      let other = options.filter(item=>item.key!=name).map(item => item.key);
+      this.close(other);
+    },
+    closeRight(k){
+      let {tags : { options }, contextmenuAttr : { current : name } } = this,
+          index = options.findIndex((item,index)=>item.key == name ),
+          right = options.slice(index+1).map(item => item.key);
+      this.close(right);
+    },
+    closeAll(k){
+      this.close(this.tags.options.map(item => item.key));
+    },
   },
   watch: {
     $route() {
       this.routes();
+    },
+    'contextmenuAttr.show'(v) {
+      document.body[(v?'add':'remove')+'EventListener']('click', this.hideMenu);
     }
   },
   components : {
@@ -254,7 +316,7 @@ export default {
     }
 
     .r-menu{
-      position: absolute;
+      position: fixed;
       left: 0;
       top : 0;
       z-index: 989;

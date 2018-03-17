@@ -41,9 +41,10 @@ export default {
           // 更新至第一个
       // options.push(...options.splice(i,1));
     },
-    DELETE_TABS : (state,name) => {
+    DELETE_TAB : (state,name) => {
       let options = state.speedTabs.options;
-      options.splice(options.findIndex(item => item.key === name),1)
+      options.splice(options.findIndex(item => item.key === name),1);
+
     },
     SET_NAMES : (state,names) => {
       state.names = names
@@ -60,6 +61,7 @@ export default {
       if(~index){
         cacheViews.splice(index,1);
       }
+      console.log(cacheViews);
     },
     SET_NUMBER : (state, number) => {
       state.number = number;
@@ -82,12 +84,13 @@ export default {
     updateQuery({commit},payload){
       commit('UPADTE_QUERY',payload)
     },
-    deleteTabs({commit,state},payload){
-      commit('DELETE_TABS',payload.name);
-      // commit('DEL_CACHE_VIEW',payload.name);
+    deleteTab({commit,state},payload){
+      commit('DELETE_TAB',payload.name);
       let options = state.speedTabs.options;
-      // console.log(state.speedTabs.options.slice(-1));
-      // return options[options.length-1];
+      return state.speedTabs.options.slice(-1)[0];
+    },
+    deleteTabs({commit,state},names){
+      names.forEach(name => commit('DELETE_TAB',name));
       return state.speedTabs.options.slice(-1)[0];
     },
     addCacheView({commit,state},name){

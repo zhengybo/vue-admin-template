@@ -1,7 +1,7 @@
 
 export default (_import) => ({
   path: '/main/form',
-  name: 'form',
+  name: 'forms',
   component: _import('main/form'),
   meta : {
     icon : 'couplet-gateway'

@@ -4,7 +4,7 @@
 
  export default [
    'home',
-   'form',
+   'forms',
    'activeManage',
    'costSearch',
    'test2',

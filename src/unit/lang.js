@@ -9,7 +9,7 @@ export default {
   detailChart2 : '图2',
   detailChart3 : '图3',
   detailList : '列表',
-  form : '表单',
+  forms : '表单',
   user : '个人中心',
   setting : '设置',
   activeManage : '激活管理',

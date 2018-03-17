@@ -14,7 +14,7 @@
 export default {
   name : 'search2',
   destroyed(){
-    console.log('----');
+    // console.log('----');
   }
 }
 </script>
