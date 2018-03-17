@@ -1,7 +1,7 @@
 <template lang="html">
   <!-- <router-view ></router-view> -->
   <div id="activeManage">
-    <div class="vhide SNsearch">
+    <div class="hidden SNsearch">
       <el-input
       class="tm-s-ipt"
       v-model="param.deviceSn"
@@ -12,7 +12,7 @@
       placeholder="手机SN"></el-input>
       <!-- <form-select></form-select> -->
     </div>
-    <div class="vhide">
+    <div class="hidden">
       <span class="activeSearchTit">激活时间查询：</span>
       <div class="">
         <el-date-picker

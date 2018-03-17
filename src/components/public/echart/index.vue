@@ -13,7 +13,7 @@
 <script>
 import echartConfig from '@/js/echartConfig'
 import { echartTool } from '@/js/public/tool/echartTool'
-import { Obj } from '@/js/public/tool'
+import { Obj, Arrayed } from '@/js/public/tool'
 export default {
 	props : {
     id : {
@@ -86,7 +86,6 @@ export default {
 
     },
     reload(){
-
       this.load ();
     }
   },
@@ -106,8 +105,9 @@ export default {
       this.echart.on('legendselectchanged', (v) => {
         let { async : _async } = this.setting;
         if(!Obj.isObject(_async)) return ;
-        let { query, compass } = _async,
-            { selected, name } = v;
+        let { query, compass, default : _default } = _async,
+        { selected, name } = v;
+        selected[name] ? _default.push(name) : Arrayed.remove(_default,name);
         if(selected[name] && !compass[name]){
           this.echart.showLoading(this.loadMsg);
           this.$http(
@@ -146,6 +146,8 @@ export default {
     },
 
     asyncAct (_async){ //异步操作
+      if(!_async.compass)_async.compass = {};
+      Object.keys(_async.compass).forEach(k => _async.compass[k] = false);
       if(_async.request) {
         this.asyncRquest(_async).then((v) => {
           this.setOption(this.param);
@@ -168,7 +170,6 @@ export default {
         })
       })
       this.$https(requests,this.exist).then((list) => {
-
         this.echart.hideLoading();
       }).catch(() => {
         this.echart.hideLoading();
@@ -204,9 +205,9 @@ export default {
 
     getPublicHander(obj = {},fn){ // 获取公有 的请求结构体
       let { setting : { url, success, alias, fail, data={} }, param } = this;
-      return Obj.merge({
+      let r= Obj.merge({
         url,
-        data,
+        data : { ...data },
         success : (data) => {
           success && success.call(
             this,
@@ -224,7 +225,8 @@ export default {
         fail : (data) => {
           fail && fail(data);
         }
-      },obj);
+      },obj)
+      return r;
     }
 
 	},

@@ -8,8 +8,11 @@
     :initLoading="true"
     :setting="bar.setting"
     :param="bar.param"></echart>
+    <el-button class="r" @click="reloadBarHor">查询</el-button>
+    <div class="clear"></div>
     <echart
     :initLoading="true"
+    :reload="reloadBarHorFlag"
     :setting="barHor.setting"
     :param="barHor.param"></echart>
     <echart
@@ -32,14 +35,20 @@ import line from './config/line'
 import barHor from './config/bar-hor'
 import scatterMap from './config/scatterMap'
 export default {
-  name : 'test1',
+  name : 'charts',
   data(){
     return {
       bar,
       map,
       line,
       barHor,
-      scatterMap
+      scatterMap,
+      reloadBarHorFlag : false
+    }
+  },
+  methods : {
+    reloadBarHor (){
+      this.reloadBarHorFlag = !this.reloadBarHorFlag;
     }
   }
 }

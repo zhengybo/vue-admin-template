@@ -20,11 +20,9 @@ const fetchHttp = function(setting,exist,length=1){//请求
     type = 'GET',
     data = {}
   } = setting;
-
   if(exist && exist.length && (length == exist.length)){
-    exist.forEach((req , index) => {            //放弃请求
-      req.abort();
-    });
+    console.log('终止请求');
+    exist.forEach(req => req.abort());   //放弃请求
     exist.length = 0;
     // for (let i = exist.length-1; i >= 0; i--) { //清除引用
     //   exist.splice(i,1)
@@ -128,7 +126,9 @@ const https = function(settings = [],exist){
   }
   return Promise.all(
     settings.map(setting => http.call(this,setting,exist,settings.length))
-  ).catch(() => {
+  ).then(() => {
+    exist && (exist.length = 0); //请求结束 请求 记录
+  }).catch(() => {
     console.warn('请求中有一个或多个请求发生错误！');
   })
 }

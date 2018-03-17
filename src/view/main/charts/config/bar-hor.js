@@ -1,4 +1,5 @@
 import apis from '@/js/api'
+let once = false;
 export default {
   param : {
     type : 'barEchart',
@@ -31,7 +32,10 @@ export default {
 
         },
         success : (data,async,options) => {
-          async.default = data.default;
+          if(!once){
+            async.default = data.default;
+            once = !once;
+          }
           let series = [],
               selected = {};
           data.list.forEach(item => {
