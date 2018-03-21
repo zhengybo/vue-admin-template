@@ -59,7 +59,7 @@ import { Obj } from './tool'
  //计算meta节点信息
 const caches = [],
       menus = [];
-let defaultMata = () => ({ menu : false, cache : false, grider : true, cacheViews : [] })
+let defaultMata = () => ({ menu : false, cache : false, grider : true, cacheViews : [] , speedTab : void 0})
 function forNavMetaGrider(arr = [], temp = [],cacheTemp = [], records = {}, routes = []){
   arr.forEach(item => {
     let copyTemp = [...temp],
@@ -142,6 +142,8 @@ function forNavGrider(arr = [], temp = [],cacheTemp = [], record = {} ){ //计�
  * 路由由d切换为b，再由b切换到e时.当前路由视图显示为d路由的视图而不是e路由的视图。
  * 解决--->
  *   将菜单的二以上级路(及存在menu为true 且在二级以上路由)由全部转化为 一级路由
+ * ps (对于同一个显示界面上如果用多级缓存同样会出现这个问题，在同个显示页内尽量不要用多级路由缓存，当然如果子路由只有一个没关系，但如果是非要用多个请务必注意)
+      (如果真需要 需要重新构思如何解决显示问题)
  */
 function generateRouter(arr,store = [],deep = 0){ //将菜单的多级路由转化为一级路由
   for (let i = 0; i < arr.length; i++) {

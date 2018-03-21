@@ -153,7 +153,7 @@ export default {
           if(!options.length) tmp =  tmp.filter(v => v.key !='home');
           tmp.forEach(item => {
             //删除 所有缓存
-            !item.cacheViews
+            item.cacheViews
               ? dispatch('delCacheViews',item.cacheViews)
               :  dispatch('delCacheView',item.key);
           })
@@ -167,13 +167,14 @@ export default {
       this.$refs.carousel.setActiveItem(this.curIndex);
     },
     routes (){
-      let { path, name, meta : { cache, query, cacheViews } } = this.$route;
+      let { path, name, meta : { cache, query, cacheViews, speedTab } } = this.$route;
       if(cache){
         this.$store.dispatch('queryTabs',{
           path,
           name,
           query,
-          cacheViews
+          cacheViews,
+          speedTab
         }).then((value) => {
           let index = this.tags.options.findIndex(item => item.key == name);
           if(!~index)return; // 没有在菜单栏内的路由

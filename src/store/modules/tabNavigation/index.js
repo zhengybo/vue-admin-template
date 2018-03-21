@@ -82,13 +82,13 @@ export default {
   },
   actions: {
     queryTabs({state,commit},payload){
-      let { name, cacheViews } = payload;
+      let { name, cacheViews, speedTab = true } = payload;
       let flag = state.speedTabs.options.some(item => item.key == name);
       if(!flag){
         cacheViews
         ? cacheViews.forEach(v => commit('ADD_CACHE_VIEW', v))
         : commit('ADD_CACHE_VIEW', name);
-        commit('ADD_TABS',payload);
+        if( speedTab )commit('ADD_TABS',payload);
       }else {
         commit('UPDATE_TABS',name)
       }
