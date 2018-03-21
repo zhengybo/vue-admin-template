@@ -4,11 +4,8 @@
     ref='container'
     class='speed-container'
     @contextmenu.prevent
-    :style="{
-      'width' : `${splitGap*126+90}px`
-    }">
+    :style="{ 'width' : `${splitGap*126+90}px` }">
     <el-carousel
-
       ref="carousel"
       indicator-position="none"
       @change="change"
@@ -19,12 +16,7 @@
       v-for="(item,index) in splitTags"
       :name="`${index}`"
       :key="index">
-        <div
-          class="tabs-view-frame"
-
-          :style="{
-            'width' :`${splitGap*124}px`
-          }">
+        <div class="tabs-view-frame" :style="{ 'width' :`${splitGap*124}px` }">
           <router-link
           v-for="(tag,i) in item"
           class="tabs-view l"
@@ -33,20 +25,20 @@
             <span @contextmenu.prevent="contextmenu(tag.key,$event)">
               <el-tag
                 size="small"
+                :title="getTitlePath(tag.path)"
                 :type="tag.key === tags.default ? '' : 'info'"
                 :class="[tag.key === tags.default ? 'tag-active' : '','tag-item']"
                 :closable="splitTags[0].length > 1"
-                 @close.prevent.stop='close([tag.key])'
-                 >
+                @close.prevent.stop='close([tag.key])'>
                   <template>
-                    <span :title="tag.name" class="linkName">{{tag.name}}</span>
+                    <span class="linkName">{{tag.name}}</span>
                   </template>
-              </el-tag >
+              </el-tag>
             </span>
           </router-link>
         </div>
       </el-carousel-item>
-    </el-carousel >
+    </el-carousel>
     <right-menu
     v-if="contextmenuAttr.show"
     @closeCurrent="closeCurrent"
@@ -63,16 +55,18 @@ import lang from '@/unit/lang'
 import { RightMenu } from '@/components/self'
 export default {
   computed: {
+    titlePaths(state){
+      return this.$store.state.fastNavigation.data;
+    },
     tags() {
-      return this.$store.state.tabNavigation.speedTabs
+      return this.$store.state.tabNavigation.speedTabs;
     },
     sum(){ //总条数
-      return this.tags.options.length
+      return this.tags.options.length;
     },
     splitGap (){
-      return this.$store.state.tabNavigation.number
+      return this.$store.state.tabNavigation.number;
     },
-
     splitTags(){
       let options = this.tags.options,
           gap = this.splitGap,
@@ -89,7 +83,6 @@ export default {
     }
   },
   data(){
-
     return {
       lang : lang,
       initialIndex : 0,
@@ -133,7 +126,11 @@ export default {
       }
       container.addEventListener(wheel,scrollFunc,false)
     },
-    close(names = []){
+    getTitlePath (path){
+      let { titlePaths, lange } = this;
+      return titlePaths[path].map(item => lang[item.name]).join(' > ');
+    },
+    close(names = []){  //关闭tab
       if(!names.length)return ;
       const {
         tags : { options, default : _default },
@@ -155,17 +152,18 @@ export default {
         $nextTick(() => {
           if(!options.length) tmp =  tmp.filter(v => v.key !='home');
           tmp.forEach(item => {
-            item.cacheViews
+            //删除 所有缓存
+            !item.cacheViews
               ? dispatch('delCacheViews',item.cacheViews)
               :  dispatch('delCacheView',item.key);
           })
         })
       });
     },
-    change (index){
+    change (index){ //修改当前的tab
       this.lastIndex = index;
     },
-    location(){
+    location(){ // 定位到当前tab列
       this.$refs.carousel.setActiveItem(this.curIndex);
     },
     routes (){
@@ -191,7 +189,7 @@ export default {
       this.lastIndex = cur;
       this.$refs.carousel.setActiveItem(cur);
     },
-    contextmenu(key,e){
+    contextmenu(key,e){ // 右菜单
       let { $route : { name }, tags : { options} } = this;
       if(name == 'home' && options.length == 1){
         return;
@@ -215,7 +213,7 @@ export default {
       this.close(other);
     },
     closeRight(k){
-      let {tags : { options }, contextmenuAttr : { current : name } } = this,
+      let { tags : { options }, contextmenuAttr : { current : name } } = this,
           index = options.findIndex((item,index)=>item.key == name ),
           right = options.slice(index+1).map(item => item.key);
       this.close(right);
@@ -227,6 +225,13 @@ export default {
   watch: {
     $route() {
       this.routes();
+    },
+    splitGap(v){ // 重置定位
+      this.setItem
+      let { tags , splitGap } = this,
+          name = tags.default,
+          index = tags.options.findIndex(item => item.key == name);
+      this.curIndex = parseInt(index / splitGap);
     },
     'contextmenuAttr.show'(v) {
       document.body[(v?'add':'remove')+'EventListener']('click', this.hideMenu);

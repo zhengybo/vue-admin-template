@@ -48,14 +48,14 @@ export default {
   top:-11px;
 
   .nail{
-    // @include whb(20px,20px,#324e7c);
+    @include whb(20px,20px,#324e7c);
     border-radius: 50%;
     position: absolute;
     left: 0;
     top: 0;
   }
   .rings{
-    // @include whb(10px,10px,#324e7c);
+    @include whb(10px,10px,#324e7c);
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.5s ease;
@@ -67,7 +67,7 @@ export default {
     }
   }
   .rope{
-    // @include whb(2px,7px,#324e7c);
+    @include whb(2px,7px,#324e7c);
     transition: all 0.6s ease;
     position: absolute;
     left: 9px;

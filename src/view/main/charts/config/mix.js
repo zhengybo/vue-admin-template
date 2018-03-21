@@ -2,15 +2,23 @@ import apis from '@/js/api'
 export default () => {
   return {
     param : {
-      type : 'lineEchart',
+      type : 'barEchart',
       config : {
-        savename : '线图趋势'
+        savename : '柱状图趋势'
       },
       options : {
         xAxis : {
           data: []
         },
-        series : []
+        series : [],
+        legend : {
+          selected : {
+            "吃类" : true,
+            "喝类" : true,
+            "玩类" : false,
+            "耍类" : false
+          }
+        }
       }
     },
     setting : {
@@ -22,7 +30,9 @@ export default () => {
       },
       success : (data,options) => { //options 指代 echart.param.options
         options.xAxis = data.xAxis;
-        options.series = data.series
+        data.series[1].type = 'line';
+        data.series[3].type = 'line';
+        options.series = data.series;
       },
     }
   }

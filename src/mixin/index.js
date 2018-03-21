@@ -25,6 +25,7 @@ export default {
       let cache = !!~getCaches().indexOf(name),
           dispatch = this.$store.dispatch;
       if(cache) await dispatch('delCacheView',to.name);
+      await dispatch('delCacheView',to.name);
       this.$nextTick(() => {
         this.$router.push(to);
         if(cache){

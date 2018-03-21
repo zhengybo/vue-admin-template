@@ -23,7 +23,7 @@ export default {
   height: 100%;
 }
 .reloadIcon{
-  // @include transform(rotate(180deg),rotate(180deg) scale(0.8));
+  @include transform(rotate(180deg),rotate(180deg) scale(0.8));
   width: 30px;
   height: 100%;
   cursor: pointer;

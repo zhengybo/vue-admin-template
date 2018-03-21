@@ -35,7 +35,7 @@ export default {
 }
 
 .screenfull{
-  // @include transform(scale(1.1),scale(1));
+  @include transform(scale(1.1),scale(1));
   width: 30px;
   height: 100%;
   position: absolute;

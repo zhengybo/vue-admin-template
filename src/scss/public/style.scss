@@ -111,6 +111,13 @@ $lineHeight : 0 24 40;
 }
 
 //动画
+
+.fade-enter-active, .fade-leave-active {
+transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to {
+	opacity: 0;
+}
 .example-enter {
   opacity: 0.01;
 	width: 0;

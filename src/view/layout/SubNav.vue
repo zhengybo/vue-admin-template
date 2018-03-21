@@ -43,7 +43,6 @@ export default {
       navigation(state){
         // let fastNav = state.fastNavigation.data;
         // this.nav = fastNav[this.$route.name];
-        console.log();
         return state.fastNavigation.data[this.$route.path];
       },
       open(state){
@@ -83,7 +82,7 @@ export default {
 
 <style lang="scss">
 #SubNav{
-  // @include whb(auto,30px,rgba(230,230,230,0.1));
+  @include whb(auto,30px,rgba(230,230,230,0.1));
   line-height: 30px;
   padding-left: 20px;
   border-top : 1px solid #dce5f4;

@@ -5,6 +5,11 @@ try { //保证取到的正确值
   let v = Cookie.getCookie('SLIDE_TABS');
   speedTabs = Array.isArray(v) ? v : []
 } catch(e){}
+/**
+ * 多个缓存子节点共用用一个父节点时，父节点需要被缓存，当子节点被清除时父节点需要做判断
+ * 当计数器置为0时表示被清理 否则只是减少计数
+ */
+const CACHE_COUNTS = {} ;
 export default {
   state : {
     names : null,
@@ -52,16 +57,23 @@ export default {
     ADD_CACHE_VIEW : (state, view) => {
       let cacheViews = state.cacheViews;
       if(!~cacheViews.indexOf(view)){
+        CACHE_COUNTS[view] = 1;
         cacheViews.push(view);
+      }else {
+        CACHE_COUNTS[view]++;
       }
+      console.log(JSON.parse(JSON.stringify(cacheViews)));
+      // console.log(CACHE_COUNTS);
     },
     DEL_CACHE_VIEW : (state, view) => {
       let cacheViews = state.cacheViews,
           index = cacheViews.indexOf(view);
-      if(~index){
+      if(~index && CACHE_COUNTS[view] === 1){ // 存在缓存且计数器为1
         cacheViews.splice(index,1);
+      }else {
+        CACHE_COUNTS[view] -- ;
       }
-      console.log(cacheViews);
+
     },
     SET_NUMBER : (state, number) => {
       state.number = number;

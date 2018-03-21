@@ -65,7 +65,7 @@ exports.cssLoaders = function (options) {
             loader: 'sass-resources-loader',
             options: {
               // it need a absolute path
-              resources: [resolveResouce('index.scss')]
+              resources: [resolveResouce('mixin.scss')]
             }
         }
       ];
@@ -84,10 +84,10 @@ exports.cssLoaders = function (options) {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
-    // sass : generateSassResourceLoader(),
-    // sass : generateSassResourceLoader(),
+    // sass: generateLoaders('sass', { indentedSyntax: true }),
+    // scss: generateLoaders('sass'),
+    sass : generateSassResourceLoader(),
+    sass : generateSassResourceLoader(),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
   }

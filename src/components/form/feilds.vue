@@ -206,7 +206,7 @@ export default {
 
 }
 .form-item{
-  min-width: 450px;
+  min-width: 400px;
 }
 .line {
   display: inline-block;

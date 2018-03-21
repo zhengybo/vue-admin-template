@@ -108,7 +108,7 @@ export default {
     border-radius: 50%;
     transform-origin : 65% 50%;
     transition: transform 0.5s ease 0s;
-    // // @include arabesquitic();
+    // @include arabesquitic();
     .close-contain{
       width: 0;
       height: 0;

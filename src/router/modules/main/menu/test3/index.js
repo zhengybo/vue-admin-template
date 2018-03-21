@@ -39,7 +39,7 @@ export default (_import) => ({
       name: 'search2',
       component: _import('main/search/list'),
       meta : {
-        cacheViews : ['search2','search']
+        // cacheViews : ['search2','search']
       }
     },
     // {

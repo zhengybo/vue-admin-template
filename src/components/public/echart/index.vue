@@ -133,7 +133,7 @@ export default {
       let { echart, setting, $refs : { self } } = this,
           { options, options : { series }, config = {}, type } = param,
           data = series[0] ? series[0].data : series.data;
-      this.noData = data && !data.length; // 判断 根据项目而定
+      // this.noData = data && !data.length; // 判断 根据项目而定
       config.horizonta && echartTool.setHeight(self, options, echart);
       echart.setOption(echartConfig[type](options, config));
       echart.resize();

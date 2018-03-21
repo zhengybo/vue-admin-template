@@ -11,7 +11,7 @@
           <link-to :to="{name : 'detailList',query : {id : scope.row.id}}">
             <el-button
             size="small"
-            type="primary">列表详情</el-button>
+            type="primary">列表</el-button>
           </link-to>
           <!-- <router-link to="/main/home/detail/list">
 

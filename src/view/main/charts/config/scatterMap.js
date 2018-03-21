@@ -1,34 +1,37 @@
 import apis from '@/js/api'
-export default {
-  style : {
-    height : '500px'
-  },
-  param : {
-    type : 'scatterEchart',
-    config : {
-      savename : '点图',
+export default () => {
+  return {
+    style : {
+      height : '500px'
     },
-    options : {
-      title : {
-        show : true,
-        text : '点图',
-        subtextStyle : {
-          fontSize : 16
-        }
+    param : {
+      type : 'scatterEchart',
+      config : {
+        savename : '点图',
       },
-      series : []
-    }
-  },
-  setting : {
-    url : apis.geoMapChartExample,
-    data : {
+      options : {
+        title : {
+          show : true,
+          text : '点图',
+          subtextStyle : {
+            fontSize : 16
+          }
+        },
+        series : []
+      }
+    },
+    setting : {
+      url : apis.geoMapChartExample,
+      data : {
 
-    },
-    alias : {
-      sounce : true
-    },
-    success : (data,options) => { //options 指代 echart.param.options
-      options.series = data
-    },
+      },
+      alias : {
+        sounce : true
+      },
+      success : (data,options) => { //options 指代 echart.param.options
+        options.series = data
+      },
+    }
   }
+
 }

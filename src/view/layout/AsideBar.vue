@@ -38,7 +38,8 @@
 
 <script>
 
-import { AsyncRouter } from '@/router/route'
+// import { AsyncRouter } from '@/router/route'
+import { getMenus } from '@/js/public/init'
 import { Str, Arrayed } from '@/js/public/tool'
 import { mapState } from 'vuex'
 export default {
@@ -74,7 +75,9 @@ export default {
   },
   data() {
     return {
-      router : AsyncRouter.children,
+      // router : AsyncRouter.children,
+      // 获取形式上的menus结构
+      router :  getMenus(),
       asideBg : '#393d46',
       textColor : '#eaeaea',
       openedMenus : [],
