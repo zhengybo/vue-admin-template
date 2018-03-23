@@ -36,7 +36,7 @@ export default {
     UPADTE_QUERY : (state, payload) => {
       let tmp = state.speedTabs.options.find(item => item.key == payload.name);
       if(tmp){
-        Object.assign(tmp.query,payload.query)
+        Object.assign(tmp.query,payload.query);
       }
     },
     UPDATE_TABS : (state,name) => {
@@ -109,12 +109,12 @@ export default {
       commit('ADD_CACHE_VIEW',name);
     },
     delCacheView({commit,state},name){
-      let preLen = state.cacheViews.length
+      let preLen = state.cacheViews.length;
       commit('DEL_CACHE_VIEW',name);
       return preLen != state.cacheViews.length;
     },
     delCacheViews({commit,state},views = []){
-      let preLen = state.cacheViews.length
+      let preLen = state.cacheViews.length;
       views.forEach(name => commit('DEL_CACHE_VIEW',name));
       return preLen != state.cacheViews.length;
     },

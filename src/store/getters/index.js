@@ -5,6 +5,6 @@ export default {
       store.dispatch('setSelect','alarmName');
       return {};
     }
-    return state.global.selects['alarmName']
+    return state.global.selects['alarmName'];
   }
 }

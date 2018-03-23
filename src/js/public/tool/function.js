@@ -22,7 +22,7 @@ export default class Functioned {
     }
   }
 
-  static throttle(fn,time){
+  static throttle(fn,time){ // 缓存函数
     let timer = null;
 
     return function(){

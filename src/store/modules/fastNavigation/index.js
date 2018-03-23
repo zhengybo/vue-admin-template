@@ -11,7 +11,7 @@ export default {
   },
   actions: {
     setNavigation({commit},data){
-      commit('SET_NAVIGATION',data)
+      commit('SET_NAVIGATION',data);
     }
   }
 }

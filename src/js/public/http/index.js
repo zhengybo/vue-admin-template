@@ -98,20 +98,20 @@ const http = function(setting,exist,length){
       success && success.call(this,json);
       return json;
     })
-    // .catch(res => {
-    //   publicFn && publicFn.call(this,{});
-    //   let timeout = res === 'timeout';
-    //   loading && $LoadingServer.close();
-    //   this.$notify({
-    //     title: '提示',
-    //     message:timeout ? '请求超时' : '请求失败,网络异常!',
-    //     position :`${timeout ? 'top' : 'bottom'}-right`,
-    //     type : timeout ? 'warning' : 'error'
-    //   });
-    //   // if(!checkToken.call(this,'40002'))return;
-    //   publicFn && publicFn.call(this);
-    //   catchFn && catchFn.call(this);
-    // })
+    .catch(res => {
+      publicFn && publicFn.call(this,{});
+      let timeout = res === 'timeout';
+      loading && $LoadingServer.close();
+      this.$notify({
+        title: '提示',
+        message:timeout ? '请求超时' : '请求失败,网络异常!',
+        position :`${timeout ? 'top' : 'bottom'}-right`,
+        type : timeout ? 'warning' : 'error'
+      });
+      // if(!checkToken.call(this,'40002'))return;
+      publicFn && publicFn.call(this);
+      catchFn && catchFn.call(this);
+    })
 }
 
 /**

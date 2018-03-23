@@ -134,7 +134,7 @@ export default {
           }
           this.timer = setTimeout(() => {
             this.$refs.menu.openedMenus = this.openedMenus;
-          },400)
+          },400);
           // menu.openedMenus.push(...store);
         }else if (status && this.timer) {
           clearTimeout(this.timer);

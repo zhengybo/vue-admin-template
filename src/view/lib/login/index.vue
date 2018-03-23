@@ -101,7 +101,7 @@ export default {
     })
     document.onkeydown = () => {
       if (event.keyCode === 13){
-        this.submitLogin('login')
+        this.submitLogin('login');
       }
     }
   },

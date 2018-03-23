@@ -61,7 +61,7 @@ const user = {
         }
       })
     },
-    // 登出 （头部登出）
+    // 登出
     logOut({ commit, state ,dispatch }) {
       $_Vue.loading('正在退出');
       this._vm.$http({
