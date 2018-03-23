@@ -4,6 +4,8 @@ import router from './router'
 import { http , https } from '@/js/public/http'
 import mixin from './mixin';
 import store  from './store'
+import VueLazyload  from 'vue-lazyload';
+
 import './icons'
 import '@/assets/css/family.css' //需要单独引入
 // import ElementUI from 'element-ui'
@@ -12,6 +14,7 @@ import '@/assets/css/family.css' //需要单独引入
 //   require('element-ui/lib/theme-chalk/index.css');
 // }
 // Vue.use(ElementUI)
+Vue.use(VueLazyload,{lazyComponent: true});
 Vue.config.productionTip = false
 require('@/js/components/index.js').default(Vue) //注册全局组件
 window.$_Vue = new Vue({ //一些地方 无法取到vue实例 放到全局待使用

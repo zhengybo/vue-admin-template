@@ -97,7 +97,7 @@ export default {
     init(){
       // console.log(document.getElementById(this.id+'Echart')==this.$refs.self);
       this.echart = echarts.init(this.$refs.self);
-      this.asyncCompassChanged();
+      this.setting.async && this.asyncCompassChanged();
       this.initLoading && this.load();
     },
 
@@ -231,6 +231,7 @@ export default {
 
 	},
   beforeDestroy(){
+    this.echart.off('legendselectchanged');
     window.removeEventListener("resize", this.echart.resize);
   }
 }
