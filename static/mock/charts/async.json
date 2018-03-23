@@ -1,0 +1,35 @@
+{
+  "returnSuccess":true,
+  "returnErrMsg":"",
+  "default" : ["吃类","玩类"],
+  "list" : [
+    {
+      "title" : "吃类",
+      "key" : "eat",
+      "data" : {
+        "id" : 1
+      }
+    },
+    {
+      "title" : "喝类",
+      "key" : "have",
+      "data" : {
+        "id" : 2
+      }
+    },
+    {
+      "title" : "玩类",
+      "key" : "play",
+      "data" : {
+        "id" : 3
+      }
+    },
+    {
+      "title" : "耍类",
+      "key" : "play1",
+      "data" : {
+        "id" : 4
+      }
+    }
+  ]
+}

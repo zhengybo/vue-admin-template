@@ -2,7 +2,7 @@
 export default (_import) => ({
   path: '/main/search',
   name: 'search',
-  redirect: '/main/search1',
+  redirect: '/main/search2',
   component: _import('main/search'),
   meta : {
     link : true,
@@ -12,7 +12,7 @@ export default (_import) => ({
     {
       path: '/main/search1',
       name: 'search1',
-      redirect: '/main/search1-1',
+      // redirect: '/main/search1-1',
       component: _import('main/search/list'),
       children : [
         {
@@ -37,7 +37,10 @@ export default (_import) => ({
     {
       path: '/main/search2',
       name: 'search2',
-      component: _import('main/search/list')
+      component: _import('main/search/list'),
+      meta : {
+        // cacheViews : ['search2','search']
+      }
     },
     // {
     //   path: '/main/search2',

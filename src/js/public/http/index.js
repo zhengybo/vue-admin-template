@@ -5,8 +5,10 @@
 import store from '@/store'
 import fetch from 'superagent' // 伪装的fetch
 import config from './config'
-import {Obj,Cookie} from './../tool'
+import { Obj, Cookie } from './../tool'
 import { Loading } from 'element-ui'
+// 模拟方式
+const method = process.env.NODE_MOCK ? 'GET' : void 0;
 
 // window.token = null;
 let id = 0,     //记录引用
@@ -18,11 +20,9 @@ const fetchHttp = function(setting,exist,length=1){//请求
     type = 'GET',
     data = {}
   } = setting;
-
   if(exist && exist.length && (length == exist.length)){
-    exist.forEach((req , index) => {            //放弃请求
-      req.abort();
-    });
+    console.log('终止请求');
+    exist.forEach(req => req.abort());   //放弃请求
     exist.length = 0;
     // for (let i = exist.length-1; i >= 0; i--) { //清除引用
     //   exist.splice(i,1)
@@ -30,7 +30,7 @@ const fetchHttp = function(setting,exist,length=1){//请求
   }
   // window.token = window.token || localStorage.getItem('token');
   let _data = Obj.clear(JSON.parse(JSON.stringify(data))),//清除空参数
-      _f = fetch(type, url).timeout(setting.timeout || timeout.during *1000),//默认超时为10s
+      _f = fetch(method || type, url).timeout(setting.timeout || timeout.during *1000),//默认超时为10s
       result = Object.assign(_data,{//生成参数
         // 特殊的参数全局
         token : store.state.user.token
@@ -73,35 +73,35 @@ const checkToken = function(code){
  * http 默认指向vue实例
  */
 const http = function(setting,exist,length){
-  let $LoadingServer = null;
-  setting.notify = setting.notify === undefined ? true : false;
-  $LoadingServer = setting.loading && Loading.service(Object.assign({
+  let $LoadingServer = null,
+      { notify = true, loading, publicFn, fail, success, catchFn } = setting;
+  $LoadingServer = loading && Loading.service(Object.assign({
     fullscreenLoading : true,
     spinner : "el-icon-loading",
     background : "rgba(0, 0, 0, 0.8)",
     customClass : 'fllLoading'
-  },setting.loading));
+  },loading));
   return fetchHttp.call(this,setting,exist,length)
     .then(json => {
-      setting.loading && $LoadingServer.close();
-      setting.publicFn && setting.publicFn.call(this,json);
+      loading && $LoadingServer.close();
+      publicFn && publicFn.call(this,json);
       if(!json.returnSuccess){
         if(!checkToken.call(this,json.returnErrCode))return;
-        setting.notify && this.$notify.error({
+        notify && this.$notify.error({
           title: '提示',
-          message: json.returnErrMsg,
+          message: json.returnErrMsg || '发生一个未知错误',
           position : 'bottom-right'
         });
-        setting.fail && setting.fail.call(this,json);
+        fail && fail.call(this,json);
         return;
       }
-      setting.success && setting.success.call(this,json);
+      success && success.call(this,json);
       return json;
     })
     .catch(res => {
-      setting.publicFn && setting.publicFn.call(this,{});
+      publicFn && publicFn.call(this,{});
       let timeout = res === 'timeout';
-      setting.loading && $LoadingServer.close();
+      loading && $LoadingServer.close();
       this.$notify({
         title: '提示',
         message:timeout ? '请求超时' : '请求失败,网络异常!',
@@ -109,8 +109,8 @@ const http = function(setting,exist,length){
         type : timeout ? 'warning' : 'error'
       });
       // if(!checkToken.call(this,'40002'))return;
-      setting.publicFn && setting.publicFn.call(this);
-      setting.catchFn && setting.catchFn.call(this);
+      publicFn && publicFn.call(this);
+      catchFn && catchFn.call(this);
     })
 }
 
@@ -126,9 +126,11 @@ const https = function(settings = [],exist){
   }
   return Promise.all(
     settings.map(setting => http.call(this,setting,exist,settings.length))
-  ).catch(() => {
+  ).then(() => {
+    exist && (exist.length = 0); //请求结束 请求 记录
+  }).catch(() => {
     console.warn('请求中有一个或多个请求发生错误！');
   })
 }
 
-export  {http, https}
+export  { http, https }

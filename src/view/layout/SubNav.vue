@@ -3,7 +3,7 @@
   <div id="SubNav" :style="{backgroundColor:theme}" class="">
     <el-breadcrumb class="breadcrumb" separator=">">
       <transition-group name="breadcrumb">
-        <el-breadcrumb-item v-for="(tag,index) in nav" :key="index" >
+        <el-breadcrumb-item v-for="(tag,index) in navigation" :key="index" >
           <router-link
           v-if="(index != length-1) && tag.link"
           class="tabs-view"
@@ -41,9 +41,9 @@ export default {
   computed: {
     ...mapState({
       navigation(state){
-        let fastNav = state.fastNavigation.data;
-        this.nav = fastNav[this.$route.name]
-        return state.fastNavigation.data;
+        // let fastNav = state.fastNavigation.data;
+        // this.nav = fastNav[this.$route.name];
+        return state.fastNavigation.data[this.$route.path];
       },
       open(state){
         return state.switch.open
@@ -65,11 +65,11 @@ export default {
   },
   watch : {
     $route(){
-      this.nav = this.navigation[this.$route.path] || [];
+      // this.nav = this.navigation[this.$route.path] || [];
     }
   },
   created(){
-    this.nav = this.navigation[this.$route.path] || [];
+    // this.nav = this.navigation[this.$route.path] || [];
     // console.log(this.nav);
   },
   methods : {

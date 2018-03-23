@@ -9,9 +9,22 @@
     :class="['tool-contain',status ? 'show-tool' : '']">
       <div v-show="status">
         <div
-          v-for="item in tools"
+          v-for="(item,index) in basisTools"
           :style="{ left : item.x, top : item.y }"
-          class="tool-item"></div>
+          :key="index"
+          class="tool-item">
+          <el-tooltip
+          v-if="tools[index]"
+          effect="dark"
+          :open-delay="1000"
+          :content="tools[index].name"
+          :placement="item.position">
+            <div
+            @click="emit(tools[index].click)"
+            class="tool-icon-frame">
+              <icon class="tool-icon"  :icon-class="tools[index].icon" /></div>
+          </el-tooltip>
+        </div>
       </div>
       <div v-show="!status" @click="display(true)" class="open-tool"></div>
     </div>
@@ -27,28 +40,33 @@
 import Bounce from '@/js/public/lib/bounce'
 import Move from '@/js/public/lib/move'
 export default {
+  props : {
+
+  },
   computed : {
     top (){
-      return this.$store.state.tool.top
+      return this.$store.state.tool.top;
+    },
+    tools (){
+      return  this.$store.state.tool.options.filter(item => item.status);
     }
   },
   data(){
     return {
       status : false,
       radius : 70,
-      tools : [
-        {icon : '',name : '12',deg : 0},
-        {icon : '',name : '23',deg : 45},
-        {icon : '',name : '45',deg : 90},
-        {icon : '',name : '64',deg : 135},
-        {icon : '',name : '89',deg : 180}
+      basisTools : [
+        {deg : 0 ,   position : 'top'},
+        {deg : -45 , position : 'left-start'},
+        {deg : -90 , position : 'left'},
+        {deg : -135 ,position : 'left-end'},
+        {deg : -180 ,position : 'bottom'}
       ]
     }
   },
   created(){
     let r = this.radius;
-    this.tools.forEach(item=>Object.assign(item,this.setPosition(item.deg,r)));
-    // console.log(this.tools);
+    this.basisTools.forEach(item=>Object.assign(item,this.setPosition(item.deg,r)));
   },
   mounted(){
     new Move(this.$refs.tool,{
@@ -68,6 +86,9 @@ export default {
     },
     display(status){
       this.status = status;
+    },
+    emit(click){
+      typeof click === 'function' && click.call(this);
     }
   }
 }
@@ -91,8 +112,10 @@ export default {
     .close-contain{
       width: 0;
       height: 0;
+      text-align: center;
       transition: all 0.5s ease 0s;
       position: absolute;
+      transform: rotate(180deg);
       left: 50%;
       top: 50%;
     }
@@ -114,15 +137,25 @@ export default {
 
     .tool-contain{
       @extend .close-contain;
-
+      color: white;
+      .tool-icon{
+        vertical-align: middle;
+        margin-right: 0;
+        fill: currentColor;
+      }
+      .tool-icon-frame{
+        width: 100%;
+        height: 100%;
+        line-height: 30px;
+      }
       .tool-item{
         position: absolute;
         transition: all 0.15s ease 0s;
         width: 30px;
         height: 30px;
+        line-height: 30px;
         background-color: rgba(100,100,100,0.8);
         border-radius: 50%;
-
         transform: translate(-50%,-50%);
         &:hover{
           transform:translate(-50%,-50%) scale(1.3);
@@ -135,7 +168,7 @@ export default {
     }
 
     .show-tool{
-      transform: rotate(180deg);
+      transform: rotate(360deg);
     }
 
 

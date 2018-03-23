@@ -1,7 +1,7 @@
 <template lang="html">
   <!-- <router-view ></router-view> -->
   <div class="">
-    <div class="vhide">
+    <div class="hidden">
       <div class="">
         <el-date-picker
         v-model="param.startTime"

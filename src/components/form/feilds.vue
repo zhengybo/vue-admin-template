@@ -10,6 +10,7 @@
       class='form-item'
       v-for='(field,index) in fields'
       v-if="field.key"
+      v-show="!field.hidden"
       v-bind="computeAttrs(form_item_attrs,field.attrs)"
       :key='index'
       :label="field.label"
@@ -32,11 +33,13 @@
       </div>
     </el-form-item> -->
     <div class="line-blank" v-else></div>
+    <!-- 操作 -->
     <div :class="{
       'form-act' : true,
       line : actLine
       }">
       <el-form-item>
+        <!-- 自定义前按钮 -->
         <el-button
         v-for="(item,index) in prefixButton"
         size="small"
@@ -45,17 +48,18 @@
         :type="item.type || 'info' "
          @click='item.click && item.click()'>{{item.text}}</el-button>
         <el-button
-        v-if="options.resetMessage.name"
+        v-if="options.resetMessage.show"
         size="small"
         type="info"
          @click='resetFields("formData")'>
          {{options.resetMessage.name}}</el-button>
          <el-button
-         v-if="options.submitMessage.name"
+         v-if="options.submitMessage.show"
          size="small"
          type="primary"
          @click='onSubmit("formData")'>{{options.submitMessage.name}}
         </el-button>
+        <!-- 自定义后按钮 -->
          <el-button
          v-for="(item,index) in suffixButton"
          size="small"
@@ -125,11 +129,13 @@ export default {
     form_item_attrs(){ // form-item 单独(element)属性
       return Object.assign({
         // 默认属性
+
       },this.formItemAttrs)
     },
     options (){ // 可选属性
       return Obj.merge({
         resetMessage : {//默认属性
+          show : true,
           name : '重置',
           text : '你确定要重置这些信息？',
           title : '提示',
@@ -140,12 +146,20 @@ export default {
           confirmButtonText : "确定"
         },
         submitMessage : {
+          show : true,
           name : '提交',
           afterSubmit : void 0,
           beforeSubmit : void 0
         }
       },this.optionAttrs);
     }
+  },
+  created(){
+    // 初始化默认的
+    this.fields.forEach(item => Object.entries({
+      hidden : false
+      //直接赋值,无法再外部控制(注意) vue这里对于v-show 外部传进来有点bug
+    }).forEach(v => this.$set(item ,v[0], v[1])));
   },
   methods : {
     onSubmit(formName) {
@@ -182,7 +196,7 @@ export default {
       }).catch(r => {}) : reset();
     },
     computeAttrs(arg0, arg1){ //计算属性
-      return Object.assign(arg0,arg1);
+      return Object.assign({},arg0,arg1);
     }
   }
 }
@@ -192,7 +206,7 @@ export default {
 
 }
 .form-item{
-  min-width: 450px;
+  min-width: 400px;
 }
 .line {
   display: inline-block;

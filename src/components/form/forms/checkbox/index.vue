@@ -10,10 +10,10 @@
     <el-checkbox-group
     v-bind="grounpAttrs"
     v-model="defaultValue[field.key]"
-    @change="checkedChange">
+    @change="change">
       <el-checkbox
-      v-bind="checkboxAttrs"
       v-for="(item,index) in options"
+      v-bind="computeSelfAttrs(item.attrs)"
       :name="field.key"
       :label="item.value"
       :key="index">{{item.name}}</el-checkbox>
@@ -32,6 +32,11 @@ export default Object.assign(require('@/components/form/common').default('checkb
         checkboxAttrs,
       }
     },
+    watch : {
+      'field.options' : function(value){
+        this.options = value;
+      }
+    },
     computed : {
       isIndeterminate(){
         if(!this.field.checkAll)return;
@@ -45,10 +50,11 @@ export default Object.assign(require('@/components/form/common').default('checkb
       }
     },
     methods: {
+      computeSelfAttrs(value){
+        return Object.assign({},this.checkboxAttrs,value);
+      },
       checkAllChange(val) {
         this.defaultValue[this.field.key] = val ? this.checkAllItems : []
-      },
-      checkedChange(value) {
       }
     }
   }]

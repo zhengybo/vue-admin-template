@@ -64,6 +64,7 @@ export default {
     return {
       mouseBar : false,
       transiteY : 0,
+      transiteX : 0,
       ratio : 1,
       warperStyle : {
         transform : 'translateY(0)'
@@ -112,7 +113,7 @@ export default {
           this.mouseBar = true;
         },
         offsetHock : (x,y) => {
-          this.scrollTo(-y / this.ratio);
+          this.move(-y / this.ratio);
         },
         upHock : () => {
           this.mouseBar = false;
@@ -124,37 +125,37 @@ export default {
       let delta = e.wheelDelta / 5 || -e.deltaY * 8, // chrome firfox 为 24
           ratio = this.$height.containHeight/800; //和盒子高度有关
       delta = Math.min((delta / this.ratio * ratio),100); // 调制适当的滚动速度
-      this.scrollTo(delta);
+      this.move(delta);
     },
-    scrollTo(delta){ //滚动到指定位置
+    move(delta){ //移动相对位置
       let { dValue } = this.$height,
           { warper } = this.$refs;
       this.transiteY += delta;
       if(this.transiteY > 0)this.transiteY = 0;
       if(this.transiteY < 0&&-this.transiteY > dValue)this.transiteY = -dValue;
-      this.moveTo(this.transiteY);
+      this.scrollTo(this.transiteY);
     },
-    moveTo(y){
-      this.moveWarper(y);
-      this.moveBar(-y * this.ratio);
+    scrollTo(y){ //滚动到指定位置
+      this.scrollWarper(y);
+      this.scrollBar(-y * this.ratio);
     },
-    moveWarper(y){
+    scrollWarper(y){
       this.warperStyle.transform = `translateY(${y}px)`;
     },
-    moveBar(y){
+    scrollBar(y){
       this.barStyle.transform = `translateY(${y}px)`;
     },
     resize(e){ //重新计算
       this.init(); // 重新初始化数据
-      let { transiteY, ratio, $height } = this,
-          { dValue } = $height;
+      let { transiteY, ratio, $height :{ dValue } } = this;
       if(ratio >= 1){
-        this.moveTo(0);
+        this.scrollTo(0);
       }else {
         if(-transiteY > dValue){
-          this.moveWarper(-dValue)
+          this.scrollTo(-dValue);
+        }else {
+          this.scrollBar(-transiteY * ratio) // 只需要调整滚动条位置
         }
-        this.moveBar(-transiteY * ratio) // 重新调整滚动条位置
       }
     }
   },

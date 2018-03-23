@@ -63,9 +63,13 @@ export default Object.assign(require('@/components/form/common').default('fixedT
         })
       },
       changeStart(v){
+        let { start, end } = this.pickerOptions;
+        this.change && this.change([start, end]);
         this.events.changeStart && this.events.changeStart(v)
       },
       changeEnd(v){
+        let { start, end } = this.pickerOptions;
+        this.change && this.change([start, end]);
         this.events.changeEnd && this.events.changeEnd(v)
       }
     }

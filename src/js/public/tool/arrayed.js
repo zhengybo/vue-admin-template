@@ -69,4 +69,11 @@ export default class Arrayed extends Array{
     })
     return result;
   }
+
+  static remove(arr,key){
+    let index = arr.indexOf(key);
+    if(~index){
+      arr.splice(index,1);
+    }
+  }
 }

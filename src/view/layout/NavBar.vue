@@ -1,7 +1,7 @@
 <!-- 顶部栏 -->
 <template lang="html">
   <div class="">
-    <div id="NavBar" :class="[open ? '' :'toggle-shrink',hidden ? 'vhide' : '']">
+    <div id="NavBar" :class="[open ? '' :'toggle-shrink',hidden ? 'hidden' : '']">
       <speed-nav></speed-nav>
       <el-menu :default-active="$route.name" class="navbar r" mode="horizontal">
         <el-submenu index="actions">

@@ -3,9 +3,8 @@
   <div
     ref='container'
     class='speed-container'
-    :style="{
-      'width' : `${splitGap*126+90}px`
-    }">
+    @contextmenu.prevent
+    :style="{ 'width' : `${splitGap*126+90}px` }">
     <el-carousel
       ref="carousel"
       indicator-position="none"
@@ -17,49 +16,56 @@
       v-for="(item,index) in splitTags"
       :name="`${index}`"
       :key="index">
-        <div
-          class="tabs-view-frame"
-          :style="{
-            'width' :`${splitGap*124}px`
-          }">
+        <div class="tabs-view-frame" :style="{ 'width' :`${splitGap*124}px` }">
           <router-link
           v-for="(tag,i) in item"
           class="tabs-view l"
-          :to="tag.path"
+          :to="{path : tag.path,query : tag.query || {}}"
           :key="tag.path">
-            <el-tag
-              size="small"
-              :type="tag.key === tags.default ? '' : 'info'"
-              :class="[tag.key === tags.default ? 'tag-active' : '','tag-item']"
-              :closable="splitTags[0].length > 1"
-               @close.prevent.stop='close(tag.key)'>
-                <template>
-                  <span :title="tag.name" class="linkName">{{tag.name}}</span>
-                </template>
-            </el-tag >
+            <span @contextmenu.prevent="contextmenu(tag.key,$event)">
+              <el-tag
+                size="small"
+                :title="getTitlePath(tag.path)"
+                :type="tag.key === tags.default ? '' : 'info'"
+                :class="[tag.key === tags.default ? 'tag-active' : '','tag-item']"
+                :closable="splitTags[0].length > 1"
+                @close.prevent.stop='close([tag.key])'>
+                  <template>
+                    <span class="linkName">{{tag.name}}</span>
+                  </template>
+              </el-tag>
+            </span>
           </router-link>
         </div>
       </el-carousel-item>
     </el-carousel>
-    <div
-    v-if="local"
-    @click="location"
-    class="location"></div>
+    <right-menu
+    v-if="contextmenuAttr.show"
+    @closeCurrent="closeCurrent"
+    @closeOther="closeOther"
+    @closeRight="closeRight"
+    @closeAll="closeAll"
+    :attr="contextmenuAttr" class="r-menu"/>
+    <div v-if="local" @click="location" class="location"></div>
   </div>
 </template>
 
 <script>
 import lang from '@/unit/lang'
+import { RightMenu } from '@/components/self'
 export default {
   computed: {
+    titlePaths(state){
+      return this.$store.state.fastNavigation.data;
+    },
     tags() {
-      return this.$store.state.tabNavigation.speedTabs
+      return this.$store.state.tabNavigation.speedTabs;
     },
     sum(){ //总条数
-      return this.tags.options.length
+      return this.tags.options.length;
     },
     splitGap (){
-      return this.$store.state.tabNavigation.number
+      return this.$store.state.tabNavigation.number;
     },
     splitTags(){
       let options = this.tags.options,
@@ -67,7 +73,7 @@ export default {
           result = [],
           i = -gap;
       while((i += gap) < options.length){
-        result[result.length] = options.filter((v,k) => k>=i&&k<i + gap);
+        result[result.length] = options.filter((v,k) => k>=i&&k<i+gap);
       }
       if(!result.length)result[result.length] = []; //保持滑块
       return result;
@@ -77,13 +83,17 @@ export default {
     }
   },
   data(){
-
     return {
       lang : lang,
-
       initialIndex : 0,
       lastIndex : 0,
-      curIndex : 0
+      curIndex : 0,
+      contextmenuAttr : {
+        show : false,
+        left : 100,
+        top : 0,
+        crrent : null
+      }
     }
   },
   created(){
@@ -97,8 +107,7 @@ export default {
       let flag = false,
           timer = null,
           direct = 0,
-          $refs = this.$refs,
-          carousel = $refs.carousel,
+          { carousel, container} = this.$refs,
           wheel = ~navigator.userAgent.indexOf("Firefox") ? 'DOMMouseScroll' : 'mousewheel';
       const scrollFunc = (e) => {
         if(this.sum <= this.splitGap) return;
@@ -115,25 +124,57 @@ export default {
         clearTimeout(timer);
         timer = setTimeout(() => { flag = false; },100);
       }
-      $refs.container.addEventListener(wheel,scrollFunc,false)
+      container.addEventListener(wheel,scrollFunc,false)
     },
-    close (name){ //关闭
-      this.$store.dispatch('deleteTabs',{ name : name }).then(res => {
-        this.$route.name == name &&  this.$router.push(res.path);
+    getTitlePath (path){
+      let { titlePaths, lange } = this;
+      return titlePaths[path].map(item => lang[item.name]).join(' > ');
+    },
+    close(names = []){  //关闭tab
+      if(!names.length)return ;
+      const {
+        tags : { options, default : _default },
+        $store : { dispatch },
+        $router,
+        $nextTick
+       } = this;
+       let tmp = options.filter(item => ~names.indexOf(item.key));  //被删除项
+      dispatch('deleteTabs',names).then(res => {
+        let exist = !~names.indexOf(_default);
+        if(!exist){ //是否当前当前页面的tab还存在
+          if(!options.length){
+            $router.push('/main/home');
+          }else{
+            $router.push(res.path)
+          }
+        }
+        //需要在跳转后 再移除内存不然在删除自己的时候会内存泄漏!!
+        $nextTick(() => {
+          if(!options.length) tmp =  tmp.filter(v => v.key !='home');
+          tmp.forEach(item => {
+            //删除 所有缓存
+            item.cacheViews
+              ? dispatch('delCacheViews',item.cacheViews)
+              :  dispatch('delCacheView',item.key);
+          })
+        })
       });
     },
-    change (index){
+    change (index){ //修改当前的tab
       this.lastIndex = index;
     },
-    location(){
+    location(){ // 定位到当前tab列
       this.$refs.carousel.setActiveItem(this.curIndex);
     },
     routes (){
-      let { path, name, meta } = this.$route;
-      if(meta.cache){
+      let { path, name, meta : { cache, query, cacheViews, speedTab } } = this.$route;
+      if(cache){
         this.$store.dispatch('queryTabs',{
-          path : path,
-          name : name
+          path,
+          name,
+          query,
+          cacheViews,
+          speedTab
         }).then((value) => {
           let index = this.tags.options.findIndex(item => item.key == name);
           if(!~index)return; // 没有在菜单栏内的路由
@@ -148,12 +189,57 @@ export default {
       if(cur == this.lastIndex)return;
       this.lastIndex = cur;
       this.$refs.carousel.setActiveItem(cur);
-    }
+    },
+    contextmenu(key,e){ // 右菜单
+      let { $route : { name }, tags : { options} } = this;
+      if(name == 'home' && options.length == 1){
+        return;
+      }
+      Object.assign(this.contextmenuAttr,{
+        show : true,
+        left  : e.clientX,
+        top : e.clientY,
+        current : key
+      })
+    },
+    hideMenu(){
+      this.contextmenuAttr.show = false
+    },
+    closeCurrent(k){
+      this.close([k]);
+    },
+    closeOther(k){
+      let {tags : { options }, contextmenuAttr : { current : name } } = this;
+      let other = options.filter(item=>item.key!=name).map(item => item.key);
+      this.close(other);
+    },
+    closeRight(k){
+      let { tags : { options }, contextmenuAttr : { current : name } } = this,
+          index = options.findIndex((item,index)=>item.key == name ),
+          right = options.slice(index+1).map(item => item.key);
+      this.close(right);
+    },
+    closeAll(k){
+      this.close(this.tags.options.map(item => item.key));
+    },
   },
   watch: {
     $route() {
       this.routes();
+    },
+    splitGap(v){ // 重置定位
+      this.setItem
+      let { tags , splitGap } = this,
+          name = tags.default,
+          index = tags.options.findIndex(item => item.key == name);
+      this.curIndex = parseInt(index / splitGap);
+    },
+    'contextmenuAttr.show'(v) {
+      document.body[(v?'add':'remove')+'EventListener']('click', this.hideMenu);
     }
+  },
+  components : {
+    RightMenu
   }
 }
 </script>
@@ -233,6 +319,13 @@ export default {
       &:active{
         transform: scale(1.1);
       }
+    }
+
+    .r-menu{
+      position: fixed;
+      left: 0;
+      top : 0;
+      z-index: 989;
     }
   }
 

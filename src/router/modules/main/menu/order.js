@@ -4,10 +4,11 @@
 
  export default [
    'home',
+   'forms',
    'activeManage',
    'costSearch',
-   'test2',
-   'test1',
+   'tables',
+   'charts',
    'search',
    'test4',
    'test5',

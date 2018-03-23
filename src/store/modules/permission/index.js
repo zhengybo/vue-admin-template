@@ -5,6 +5,7 @@ function getPermissionRouter(routers = [],rights = [],noRights = [],deep = 0){
   return routers.filter(route => {
     Obj.cover(route.meta = route.meta || {},{ //初始化部分默认数据 菜单数据
       menu : true,
+      grider : true,
       cache : true,
       // tooltip : deep == 1,
       libRights : false
@@ -28,10 +29,10 @@ export default {
     noPermissionRouter : []
   },
   mutations : {
-    'PRUDOCT_ROUTER' : (state , routers) => { //产生有权限路由
+    PRUDOCT_ROUTER : (state , routers) => { //产生有权限路由
       state.permissionRouter = routers;
     },
-    'PRUDOCT_NO_ROUTER' : (state) => { //产生无权限路由
+    PRUDOCT_NO_ROUTER : (state) => { //产生无权限路由
       state.noPermissionRouter = state.noRights.map(path => ({
         path: path,redirect: '/403',hidden: false
       }))

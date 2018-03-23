@@ -15,7 +15,7 @@ const eventsMap = {
   fixedTime : ['change'],
   datePicker : ['change'],
   dateTimePicker : ['change'],
-  fixedTimeRange : [],
+  fixedTimeRange : ['change'],
 }
 
 
