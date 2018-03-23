@@ -155,7 +155,7 @@ function generateRouter(arr,store = [],deep = 0){ //将菜单的多级路由转�
           arr.splice(i--,1);
         }
       }else if(item.children){
-        generateRouter(item.children,store,deep + 1);
+        generateRouter(item.children, store, deep + 1);
       }
     }
   }
@@ -170,6 +170,9 @@ export const navGrider = (data) => {
   let router = generateRouter(data);
   data[0].children.push(...router);
   /* *********** */
+  /* 不使用转化的路由形式 ----查看变化注释上边'转化路由形式'的代码并取消下边的注释
+  menus.push(...data[0].children)
+  */
   // console.log(JSON.parse(JSON.stringify(router)));
   return record;
 }

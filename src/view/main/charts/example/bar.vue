@@ -1,11 +1,8 @@
 <template lang="html">
-  <!-- <echart
+  <echart
   :initLoading="true"
   :setting="bar.setting"
-  :param="bar.param"></echart> -->
-  <div class="">
-    柱图<input type="text" name="" value="xxxxccc">
-  </div>
+  :param="bar.param"></echart>
 </template>
 
 <script>

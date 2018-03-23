@@ -1,8 +1,5 @@
 <template lang="html">
   <div class="">
-    <input type="text" name="" value="xxxxxxxuuuuuu">
-  </div>
-  <!-- <div class="">
     <div class="">
       一次性表格
     </div>
@@ -23,7 +20,7 @@
         </template>
       </el-table-column>
     </fix-table-pagination>
-  </div> -->
+  </div>
 </template>
 
 <script>

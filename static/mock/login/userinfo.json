@@ -3,11 +3,13 @@
   "returnErrMsg":"",
   "data":{
     "rights":[
-      "search2","activeManage","costSearch","search1","tables",
-      "test7","charts","search1-1","test7-1","test7-1-1","forms",
-      "chartDefault","chartLine","chartBar","chartMap","chartsExample",
-      "mixBar","asyncTable","onceTable","exampleTable","defaultTable",
-      "testTable"
+      "tables","testTable","defaultTable","exampleTable",
+      "asyncTable","onceTable",
+      "forms",
+      "charts","chartDefault","chartLine","chartBar",
+      "chartMap","chartsExample","mixBar"
+
+
     ],
     "id":1,
     "userId":2333,

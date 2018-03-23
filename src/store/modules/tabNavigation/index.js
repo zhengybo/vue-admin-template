@@ -62,7 +62,7 @@ export default {
       }else {
         CACHE_COUNTS[view]++;
       }
-      console.log(JSON.parse(JSON.stringify(cacheViews)));
+      // console.log(JSON.parse(JSON.stringify(cacheViews)));
       // console.log(CACHE_COUNTS);
     },
     DEL_CACHE_VIEW : (state, view) => {
