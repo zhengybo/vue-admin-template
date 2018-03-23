@@ -11,6 +11,7 @@
     </div>
     <scrollbar
     ref="scroll"
+    id="scroll-aside"
     :class="{
       'aside-scroll' : true,
       'animate-scroll' : isCollapse

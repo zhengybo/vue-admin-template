@@ -25,43 +25,30 @@
  */
 const types =['line','bar'];  //注册项目持有图类型
 import { Obj } from '@/js/public/tool'
+import { ETxyAxis, ETtitle } from './common'
 const _legend = (arr = []) => {
   let result = {}
   arr.map(item => item.name).forEach((key,index) => result[key] = !index);
   return result;
 }
 export default type => (options, config = {}) => {
-  let { xAxis = [], title = {}, legend = {}, series = [], savename } = options;
-   Array.isArray(xAxis) || (xAxis = [xAxis])
-   xAxis.forEach((item,index) => {
-    Object.assign(item ,Object.assign({
-      type: 'category',
-      boundaryGap: true,
-      data: [],
-      axisTick: {
-          alignWithLabel: true
-      },
-      axisLabel : index ? {
-        color : '#e85158'
-      } : {}
-    },item))
-   })
+  let {
+    xAxis : _xAxis  = [{}],
+    yAxis : _yAxis  = [{}],
+    title = {},
+    legend = {},
+    series = [],
+    savename } = options,
+    { xAxis, yAxis } = ETxyAxis(_xAxis,_yAxis);
 
-  let [x,y] = [
-    xAxis,
-    {
-      type: 'value',
+  if(config.horizonta) [xAxis,yAxis] = [yAxis,xAxis];
 
-    }
-  ]
-
-  if(config.horizonta)[x,y] = [y,x];
   return {//新增统计
-    title : Obj.merge({ // 标题优先级高于baseExConfig中
+    title : Obj.merge(ETtitle({ // 标题优先级高于baseExConfig中
 
-              },title),
-    xAxis : x,
-    yAxis : y,
+    }),title),
+    xAxis,
+    yAxis,
     series : series.map(item => Obj.merge({
                   type : ~types.indexOf(type) ? type : 'line',
                   //stack: '总量',

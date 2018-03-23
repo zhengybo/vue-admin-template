@@ -1,39 +1,30 @@
+
 /**
  * 地图统计配置
  */
 
 import { Obj } from '@/js/public/tool'
-
+import { ETvisualMap, ETtitle } from './common'
 export default type => options => {
-  let { title , max , visualMap = {}, series = {} } = options;
+  let {
+    title = {} ,
+    visualMap : _visualMap = {},
+    series = {} } = options;
   return {
-    title: Obj.merge({ // 标题优先级高于baseExConfig中
+    title: Obj.merge(ETtitle({ // 标题优先级高于baseExConfig中
 
-    },title),
-    tooltip: {
-        trigger: 'item',
-        formatter: '{b} {c}'
-    },
+    }),title),
     visualMap: Obj.merge({
         seriesIndex: 0,
         min: 0,
         left: 'left',
         top: 'bottom',
         inRange: {
-            color: ["#5AC8D8","#597FCA","#2552AC"],
-            symbol : ['roundRect'],
             symbolSize : [20,10]
         },
         text: ['高','低'],           // 文本，默认为数值文本
-        calculable: true
-    },visualMap),
-    grid: {
-        height: 200,
-        width: 8,
-        right: 80,
-        bottom: 10
-    },
-
+        // calculable: true
+    },ETvisualMap(_visualMap)),
     series: [
         Obj.merge({
             zlevel: 0.5,

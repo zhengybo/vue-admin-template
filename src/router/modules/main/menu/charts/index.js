@@ -54,6 +54,6 @@ export default (_import) => ({
 
   ],
   meta : {
-    icon : 'email'
+    icon : 'chart'
   }
 })

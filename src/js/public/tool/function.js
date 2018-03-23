@@ -21,4 +21,12 @@ export default class Functioned {
       flag = flag ? (fn.apply(this, arguments), false) : true
     }
   }
+
+  static throttle(fn,time){
+    let timer = null;
+
+    return function(){
+
+    }
+  }
 }

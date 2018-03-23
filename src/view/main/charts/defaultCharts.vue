@@ -1,5 +1,13 @@
 <template lang="html">
   <div class="">
+    <!-- <div class="chart-container">
+      <lazy-component >
+        <echart
+        :initLoading="true"
+        :setting="heatMap.setting"
+        :param="heatMap.param"></echart>
+      </lazy-component>
+    </div> -->
     <div class="chart-container">
       <lazy-component >
         <echart
@@ -59,7 +67,9 @@ import bar from './config/bar'
 import map from './config/map'
 import line from './config/line'
 import barHor from './config/bar-hor'
+import heatMap from './config/heatMap'
 import scatterMap from './config/scatterMap'
+
 export default {
   name : 'chartDefault',
   data(){
@@ -69,6 +79,7 @@ export default {
       line : line(),
       barHor : barHor(),
       scatterMap : scatterMap(),
+      heatMap : heatMap(),
       reloadBarHorFlag : false,
     }
   },

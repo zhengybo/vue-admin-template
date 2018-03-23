@@ -3,47 +3,48 @@
  */
 import { Obj } from '@/js/public/tool'
 const maps = ['scatter','heatmap']; //需要地图的类型
+import { ETvisualMap, ETxyAxis, ETgeo, ETtitle } from './common'
 export default type => options => {
-  let { title={}, backgroundColor='#404a59', geo={}, series=[] } = options;
+  let {
+    title = {},
+    xAxis : _xAxis = [{}],
+    yAxis : _yAxis = [{}],
+    backgroundColor = '#404a59',
+    visualMap = {},
+    geo = {},
+    series = [] } = options;
+  Array.isArray(series) || (series = [series]);
+  let attrs = {};
+  if(type == 'scatter'){
+    attrs = {
+      visualMap : Obj.merge(ETvisualMap({
+        // 私有visualMap
+        min: 0,
+        max: 500,
+        splitNumber: 5,
+        textStyle: {
+            color: '#fff'
+        }
+      }), visualMap),
+      geo : Obj.merge({
+        // 私有geo
+
+      }, ETgeo(geo))
+    }
+  }
+  if(type == 'heatmap'){
+    attrs = ETxyAxis(_xAxis,_yAxis);
+  }
   return {
-      title: Obj.merge({ // title属性优先级高于baseExConfig中
+      title: Obj.merge(ETtitle({ // title属性优先级高于baseExConfig中
         textStyle : {
           // fontWeight  : 'normal',
           color : '#fff'
         },
         top : 10
-      },title),
+      }),title),
+      ...attrs,
       backgroundColor: backgroundColor,
-      visualMap: {
-          min: 0,
-          max: 500,
-          splitNumber: 5,
-          inRange: {
-              color: ['#d94e5d','#eac736','#50a3ba'].reverse()
-          },
-          textStyle: {
-              color: '#fff'
-          }
-      },
-      geo: Obj.merge({
-          map: 'china',
-          label: {
-              emphasis: {
-                  show: false
-              }
-          },
-          roam: true,
-          itemStyle: {
-              normal: {
-                  areaColor: '#323c48',
-                  borderColor: '#111'
-              },
-              emphasis: {
-                  areaColor: '#2a333d'
-              }
-          }
-      },geo),
-
       series : series.map(item => Obj.merge({
                 name : '',
                 type: type,
