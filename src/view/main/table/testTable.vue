@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="">
-    <input type="text" name="" value="">
+    10001
+
   </div>
 </template>
 
@@ -12,7 +13,7 @@ export default {
   },
   deactivated (){
     console.log('testTable当前缓存停止激活');
-  },
+  }
 }
 </script>
 

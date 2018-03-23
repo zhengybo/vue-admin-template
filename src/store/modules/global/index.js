@@ -29,7 +29,7 @@ export default {
   actions: {
     setSelect({commit},name){
       setTimeout(() => {
-        commit('SET_SELECT',name)
+        commit('SET_SELECT',name);
       },3000)
     }
   },

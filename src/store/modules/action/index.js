@@ -13,7 +13,7 @@ export default {
           $_Vue.$nextTick()
           .then(() => state.reload = true)
           .then(() => {
-            $_Vue.$route.meta.cache && store.dispatch('addCacheView',name)
+            $_Vue.$route.meta.cache && store.dispatch('addCacheView',name);
           });
           NProgress.done();
         },200);

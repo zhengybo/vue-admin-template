@@ -18,7 +18,7 @@ function getPermissionRouter(routers = [],rights = [],noRights = [],deep = 0){
       if(route.children.length)return true;
     }
     if(~rights.indexOf(route.name))return true;
-    noRights.push(route.path)
+    noRights.push(route.path);
     return false;
   })
 }

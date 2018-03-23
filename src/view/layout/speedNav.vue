@@ -113,9 +113,9 @@ export default {
         if(this.sum <= this.splitGap) return;
         e = e || window.event;
         if(e.wheelDelta){
-          direct = e.wheelDelta > 0 ? 1 : -1;
+          direct = e.wheelDelta > 0 ? -1 : 1;
         }else if(e.detail){
-          direct = e.detail > 0 ? 1 : -1;
+          direct = e.detail > 0 ? -1 : 1;
         }
         if(!flag){
           direct > 0 ? carousel.next() : carousel.prev();
@@ -173,8 +173,8 @@ export default {
           path,
           name,
           query,
-          cacheViews,
-          speedTab
+          speedTab,
+          cacheViews
         }).then((value) => {
           let index = this.tags.options.findIndex(item => item.key == name);
           if(!~index)return; // 没有在菜单栏内的路由
@@ -210,12 +210,12 @@ export default {
     },
     closeOther(k){
       let {tags : { options }, contextmenuAttr : { current : name } } = this;
-      let other = options.filter(item=>item.key!=name).map(item => item.key);
+      let other = options.filter(item => item.key!=name).map(item => item.key);
       this.close(other);
     },
     closeRight(k){
       let { tags : { options }, contextmenuAttr : { current : name } } = this,
-          index = options.findIndex((item,index)=>item.key == name ),
+          index = options.findIndex((item,index) => item.key == name ),
           right = options.slice(index+1).map(item => item.key);
       this.close(right);
     },

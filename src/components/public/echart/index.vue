@@ -76,7 +76,6 @@ export default {
 	},
 	mounted () {
      this.init();
-     window.addEventListener("resize",  this.echart.resize)
   },
   watch : {
     param (param) {
@@ -96,11 +95,17 @@ export default {
 
     init(){
       // console.log(document.getElementById(this.id+'Echart')==this.$refs.self);
+      // 标记侧边收缩
       this.echart = echarts.init(this.$refs.self);
-      this.asyncCompassChanged();
+      this.ScrollAside = document.querySelector('#scroll-aside');
+      this.ScrollAside.addEventListener('transitionend',(e) => {
+        if(e.target != this.ScrollAside) return ;
+        this.reset();
+      });
+      window.addEventListener("resize", this.reset);
+      this.setting.async && this.asyncCompassChanged();
       this.initLoading && this.load();
     },
-
     asyncCompassChanged(){
       this.echart.on('legendselectchanged', (v) => {
         let { async : _async } = this.setting;
@@ -146,12 +151,12 @@ export default {
     },
 
     asyncAct (_async){ //异步操作
-      if(!_async.compass)_async.compass = {};
+      if(!_async.compass) _async.compass = {};
       Object.keys(_async.compass).forEach(k => _async.compass[k] = false);
-      if(_async.request) {
+      if(_async.request) { //存在预请求
         this.asyncRquest(_async).then((v) => {
-          this.setOption(this.param);
-          this.mulAsyncRquest(_async);
+          this.setOption(this.param); // 更新图
+          this.mulAsyncRquest(_async); //发起当前异步
         });
       }else {
         this.mulAsyncRquest(_async);
@@ -231,6 +236,8 @@ export default {
 
 	},
   beforeDestroy(){
+    this.echart.off('legendselectchanged');
+    this.ScrollAside.removeEventListener('transitionend',this.reset);
     window.removeEventListener("resize", this.echart.resize);
   }
 }
