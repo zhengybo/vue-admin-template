@@ -74,7 +74,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
       env : 'production',
       // 根据实际情况 进行打包生产
-      theme : './static/js/theme.min.js?' + env.version,
+      theme : './static/js/theme.js?' + env.version,
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
