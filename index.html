@@ -4,10 +4,10 @@
     <meta charset="utf-8" theme-style="0.9,0.25,0.16">
     <title>vue-template</title>
     <script src='./static/js/lib/echarts.min.js' type="text/javascript"></script>
-    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="./static/js/lib/china.js"></script>
     <!-- 这个文件提前引入更友好 (开发期可以注释掉 重新require 样式 不然调试起卡)-->
     <!-- 看样式变化解除注释即可 并注释掉src/main.js element-ui 的样式 -->
-    <script src='<%= htmlWebpackPlugin.options.theme %>' type="text/javascript"> </script>
+    <!-- <script src='<%= htmlWebpackPlugin.options.theme %>' type="text/javascript"> </script> -->
     <% if (process.env.NODE_ENV == 'production') { %>
       <script src='<%= htmlWebpackPlugin.options.theme %>' type="text/javascript"> </script>
     <% } %>
