@@ -102,7 +102,7 @@ export default class Obj extends Object{
   }
 
   /**
-   * 安全的查询对象
+   * 安全的设置对象属性
    */
 
   static  parsePath (path) {

@@ -21,12 +21,20 @@ export default class Functioned {
       flag = flag ? (fn.apply(this, arguments), false) : true
     }
   }
-
-  static throttle(fn,time){ // 缓存函数
+  
+  /* 缓存函数 在减少没有必要的连续执行函数的次数 */
+  static throttle(fn,interval,immediate = false){
     let timer = null;
-
     return function(){
-
+      if(timer)return;
+      timer = setTimeout(() => {
+        fn();
+        timer = null;
+      }, interval);
+      if(immediate){
+        fn();
+        immediate = false;
+      }
     }
   }
 }

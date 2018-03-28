@@ -13,7 +13,7 @@
 <script>
 import echartConfig from '@/js/echartConfig'
 import { echartTool } from '@/js/public/tool/echartTool'
-import { Obj, Arrayed } from '@/js/public/tool'
+import { Obj, Arrayed, Functioned } from '@/js/public/tool'
 export default {
 	props : {
     id : {
@@ -69,6 +69,7 @@ export default {
 	data(){
   	return {
       echart : null,
+      _resize : null,
       http : null,
       noData : false,
       exist : []
@@ -102,7 +103,8 @@ export default {
         if(e.target != this.ScrollAside) return ;
         this.reset();
       });
-      window.addEventListener("resize", this.reset);
+      this._resize = Functioned.throttle(this.reset,100,true);
+      window.addEventListener("resize", this._resize);
       this.setting.async && this.asyncCompassChanged();
       this.initLoading && this.load();
     },
@@ -237,8 +239,8 @@ export default {
 	},
   beforeDestroy(){
     this.echart.off('legendselectchanged');
-    this.ScrollAside.removeEventListener('transitionend',this.reset);
-    window.removeEventListener("resize", this.echart.resize);
+    this.ScrollAside.removeEventListener('transitionend',this._rize);
+    window.removeEventListener("resize", this._resize);
   }
 }
 </script>
