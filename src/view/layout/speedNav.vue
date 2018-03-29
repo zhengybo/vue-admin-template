@@ -130,17 +130,24 @@ export default {
       let { titlePaths, lange } = this;
       return titlePaths[path].map(item => lang[item.name]).join(' > ');
     },
-    close(names = []){  //关闭tab
+    close(names = [],flag){  //关闭tab
       if(!names.length)return ;
       const {
         tags : { options, default : _default },
         $store : { dispatch },
         $router,
+        $route : { name },
         $nextTick
-       } = this;
+      } = this,
+        // 关闭所有 需要保留 home(需要特殊处理)
+        isKeepHome = flag == 'all' && name == 'home';
+       if(isKeepHome){
+         names = names.filter(v => v != 'home');
+       }
        let tmp = options.filter(item => ~names.indexOf(item.key));  //被删除项
       dispatch('deleteTabs',names).then(res => {
         let exist = !~names.indexOf(_default);
+        // console.log(names);
         if(!exist){ //是否当前当前页面的tab还存在
           if(!options.length){
             $router.push('/main/home');
@@ -150,12 +157,17 @@ export default {
         }
         //需要在跳转后 再移除内存不然在删除自己的时候会内存泄漏!!
         $nextTick(() => {
-          if(!options.length) tmp =  tmp.filter(v => v.key !='home');
+          // if(!options.length) tmp =  tmp.filter(v => v.key !='home');
           tmp.forEach(item => {
             //删除 所有缓存
-            item.cacheViews
+            // console.log(item.cacheViews);
+            (item.cacheViews
               ? dispatch('delCacheViews',item.cacheViews)
-              :  dispatch('delCacheView',item.key);
+              :  dispatch('delCacheView',item.key)).then( () => {
+                if(isKeepHome){
+                  dispatch('reloadRouter','home');
+                }
+              });
           })
         })
       });
@@ -220,7 +232,7 @@ export default {
       this.close(right);
     },
     closeAll(k){
-      this.close(this.tags.options.map(item => item.key));
+      this.close(this.tags.options.map(item => item.key),'all');
     },
   },
   watch: {

@@ -4,7 +4,7 @@
     <div
     :style="{backgroundColor : asideBg}"
     :class="`logoMenu ${isCollapse ?  'logo-shrink' : ''}`">
-      <div id="logo"></div>
+      <div :style="{'background': `url('${lgBg}') no-repeat center`}" id="logo"></div>
       <span class="shrink" @click="small">
         <icon icon-class="email"></icon>
       </span>
@@ -78,6 +78,7 @@ export default {
     return {
       // router : AsyncRouter.children,
       // 获取形式上的menus结构
+      lgBg :  require('@/assets/images/CarMate.png'),
       router :  getMenus(),
       asideBg : '#393d46',
       textColor : '#eaeaea',
@@ -202,8 +203,7 @@ export default {
   background-color: #393d46;
   position: relative;
   transform-origin : 0 0;
-  background: url('/src/assets/images/CarMate.png') no-repeat center center;
-  background-size: 60% 60%;
+  background-size: 60% 60%!important;
 }
 
 .logoMenu{

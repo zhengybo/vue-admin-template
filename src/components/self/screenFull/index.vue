@@ -1,7 +1,10 @@
 <!-- 全屏 -->
 <template>
   <div class="screenfullFrame">
-    <div @click='click' class="screenfull"></div>
+    <div
+    :style="{
+      'backgroundImage': `url('${bg}')` }"
+       @click='click' class="screenfull"></div>
   </div>
 </template>
 
@@ -10,9 +13,9 @@ import screenfull from 'screenfull'
 
 export default {
   name: 'screenfull',
-  data() {
+  data(){
     return {
-
+      bg : require('@/assets/images/screenfull.png')
     }
   },
   methods: {
@@ -39,7 +42,9 @@ export default {
   width: 30px;
   height: 100%;
   position: absolute;
-  background: url('/src/assets/images/screenfull.png') no-repeat center center;
+  background-repeat: no-repeat;
+  background-position: center center;
+  // background: url('/src/assets/images/screenfull.png') no-repeat center center;
   background-size: 20px 20px;
   top: 0;
   left: 0;

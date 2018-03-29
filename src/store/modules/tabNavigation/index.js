@@ -63,7 +63,6 @@ export default {
         CACHE_COUNTS[view]++;
       }
       // console.log(JSON.parse(JSON.stringify(cacheViews)));
-      // console.log(CACHE_COUNTS);
     },
     DEL_CACHE_VIEW : (state, view) => {
       let cacheViews = state.cacheViews,
@@ -73,7 +72,6 @@ export default {
       }else {
         CACHE_COUNTS[view] -- ;
       }
-
     },
     SET_NUMBER : (state, number) => {
       state.number = number;
