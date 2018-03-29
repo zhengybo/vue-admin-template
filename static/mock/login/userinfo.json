@@ -1,0 +1,20 @@
+{
+  "returnSuccess":true,
+  "returnErrMsg":"",
+  "data":{
+    "rights":[
+      "tables","testTable","defaultTable","exampleTable",
+      "asyncTable","onceTable",
+      "forms",
+      "charts","chartDefault","chartLine","chartBar",
+      "chartMap","chartsExample","mixBar"
+
+
+    ],
+    "id":1,
+    "userId":2333,
+    "userName":"大笑",
+    "age":10,
+    "icon":null
+  }
+}
