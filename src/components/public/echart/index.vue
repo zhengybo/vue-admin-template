@@ -99,10 +99,11 @@ export default {
       // 标记侧边收缩
       this.echart = echarts.init(this.$refs.self);
       this.ScrollAside = document.querySelector('#scroll-aside');
-      this.ScrollAside.addEventListener('transitionend',(e) => {
+      this._rize = (e) => {
         if(e.target != this.ScrollAside) return ;
         this.reset();
-      });
+      }
+      this.ScrollAside.addEventListener('transitionend', this._rize);
       this._resize = Functioned.throttle(this.reset,100,true);
       window.addEventListener("resize", this._resize);
       this.setting.async && this.asyncCompassChanged();

@@ -188,7 +188,7 @@ export default {
   .logo-shrink{
     height: 20px;
     #logo{
-      background : none;
+      background : none!important;
     }
   }
 }
